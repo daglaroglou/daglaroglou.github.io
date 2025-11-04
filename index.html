@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>daglaroglou</title>
+    <meta name="description" content="Personal portfolio and blog of daglaroglou.">
+    <meta name="author" content="daglaroglou" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    
+    
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@_daglaroglou_" />
+    <meta property="og:title" content="daglaroglou">
+  <meta name="twitter:title" content="daglaroglou">
+  <meta property="og:description" content="Personal portfolio and blog of daglaroglou.">
+  <meta name="twitter:description" content="Personal portfolio and blog of daglaroglou.">
+  <link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/70488503?v=4">
+  <meta property="og:image" content="https://wallpapers.com/images/hd/programming-background-ol0mi3yng9ktmxdp.jpg">
+</head>
+
+  <body>
+    <div id="root"></div>
+    <!-- GitHub Pages SPA redirect handler -->
+    <script>
+      // Check for redirect from 404.html
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.pathname) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

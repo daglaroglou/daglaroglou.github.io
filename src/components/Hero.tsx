@@ -603,11 +603,10 @@ const Hero = () => {
                   <h3 className="text-lg font-bold text-primary uppercase tracking-wider">Backend</h3>
                 </div>
                 {[
-                  { name: "Node.js", level: 90 },
-                  { name: "Python", level: 85 },
-                  { name: "Java", level: 75 },
-                  { name: "C#", level: 70 },
-                  { name: "PHP", level: 65 },
+                  { name: "Python", level: 80 },
+                  { name: "C#", level: 65 },
+                  { name: "Java", level: 55 },
+                  { name: "C", level: 40 },
                 ].map((tech, index) => (
                   <div 
                     key={tech.name}
@@ -643,11 +642,9 @@ const Hero = () => {
                   <h3 className="text-lg font-bold text-primary uppercase tracking-wider">Frontend</h3>
                 </div>
                 {[
-                  { name: "React", level: 95 },
-                  { name: "TypeScript", level: 90 },
-                  { name: "JavaScript", level: 95 },
-                  { name: "HTML/CSS", level: 90 },
-                  { name: "Tailwind CSS", level: 85 },
+                  { name: "HTML/CSS", level: 95 },
+                  { name: "GTK Framework", level: 70 },
+                  { name: "Qt Framework", level: 50 },
                 ].map((tech, index) => (
                   <div 
                     key={tech.name}

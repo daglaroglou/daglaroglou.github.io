@@ -57,15 +57,21 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    cursor: none;
   }
 
   html {
     scroll-behavior: smooth;
   }
   
-  * {
-    cursor: none !important;
+  /* Hide default cursor only on non-touch devices */
+  @media (hover: hover) and (pointer: fine) {
+    body {
+      cursor: none;
+    }
+    
+    * {
+      cursor: none !important;
+    }
   }
 }
 
@@ -329,7 +335,13 @@ All colors MUST be HSL.
 .glitch-text {
   position: relative;
   display: inline-block;
-  cursor: pointer;
+}
+
+/* Only hide cursor on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .glitch-text {
+    cursor: pointer;
+  }
 }
 
 .glitch-text:hover {

@@ -6,12 +6,12 @@ const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
 
-  // Don't render custom cursor on mobile devices
-  if (isMobile) {
-    return null;
-  }
-
   useEffect(() => {
+    // Don't add event listeners on mobile
+    if (isMobile) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       
@@ -28,7 +28,12 @@ const CustomCursor = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isMobile]);
+
+  // Don't render custom cursor on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div

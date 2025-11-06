@@ -65,6 +65,7 @@ const PCStats = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
+      console.log("Fetching PC stats...");
       const { data, error } = await supabase
         .from("pc_stats")
         .select("*")
@@ -72,8 +73,15 @@ const PCStats = () => {
         .limit(1)
         .single();
 
-      if (data && !error) {
+      if (error) {
+        console.error("Error fetching stats:", error);
+      }
+      
+      if (data) {
+        console.log("Received stats:", data);
         setStats(data);
+      } else {
+        console.log("No data received");
       }
     };
 

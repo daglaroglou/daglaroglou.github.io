@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -8,6 +9,15 @@ import blogPosts from "@/data/blog-posts.json";
 const BlogPost = () => {
   const { id } = useParams();
   const post = blogPosts.find((p) => p.id === id);
+
+  // Scroll to top when component mounts or when post changes
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, [id]);
 
   if (!post) {
     return <Navigate to="/blog" replace />;

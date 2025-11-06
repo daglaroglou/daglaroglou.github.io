@@ -15,13 +15,14 @@ const CustomCursor = () => {
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       
+      // Check if the target or any parent is clickable
       const target = e.target as HTMLElement;
-      const isClickable = 
-        target.tagName === 'A' || 
-        target.tagName === 'BUTTON' ||
-        target.onclick !== null ||
-        target.classList.contains('cursor-pointer') ||
-        window.getComputedStyle(target).cursor === 'pointer';
+      const isClickable = !!(
+        target.closest('a') ||
+        target.closest('button') ||
+        target.closest('[role="button"]') ||
+        target.closest('.cursor-pointer')
+      );
       
       setIsPointer(isClickable);
     };
@@ -42,6 +43,8 @@ const CustomCursor = () => {
         left: `${position.x}px`,
         top: `${position.y}px`,
         transform: `translate(-50%, -50%) scale(${isPointer ? 1.5 : 1})`,
+        borderColor: isPointer ? 'hsl(var(--foreground) / 0.8)' : 'hsl(var(--foreground) / 0.4)',
+        borderWidth: isPointer ? '2px' : '1px',
       }}
     />
   );

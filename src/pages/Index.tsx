@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import GitHubRepos from "@/components/GitHubRepos";
 import PCStats from "@/components/PCStats";
 import BlogPreview from "@/components/BlogPreview";
+import Donation from "@/components/Donation";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const Index = () => {
@@ -14,6 +15,7 @@ const Index = () => {
       <GitHubRepos />
       <PCStats />
       <BlogPreview />
+      <Donation />
     </div>
   );
 };

@@ -184,8 +184,11 @@ const PCStats = () => {
             </div>
             <div className="mt-4 h-2 bg-secondary rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500 shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-                style={{ width: `${stats.cpu_usage}%` }}
+                className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500"
+                style={{ 
+                  width: `${stats.cpu_usage}%`,
+                  boxShadow: '0 0 10px hsl(var(--primary) / 0.5)'
+                }}
               />
             </div>
           </Card>
@@ -207,8 +210,11 @@ const PCStats = () => {
             </div>
             <div className="mt-4 h-2 bg-secondary rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500 shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-                style={{ width: `${stats.ram_usage}%` }}
+                className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500"
+                style={{ 
+                  width: `${stats.ram_usage}%`,
+                  boxShadow: '0 0 10px hsl(var(--primary) / 0.5)'
+                }}
               />
             </div>
           </Card>
@@ -230,8 +236,11 @@ const PCStats = () => {
             </div>
             <div className="mt-4 h-2 bg-secondary rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500 shadow-[0_0_10px_rgba(255,255,255,0.5)]"
-                style={{ width: `${stats.gpu_usage ?? 0}%` }}
+                className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-500"
+                style={{ 
+                  width: `${stats.gpu_usage ?? 0}%`,
+                  boxShadow: '0 0 10px hsl(var(--primary) / 0.5)'
+                }}
               />
             </div>
           </Card>

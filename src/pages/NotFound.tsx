@@ -1,6 +1,7 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Home, AlertCircle } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const NotFound = () => {
   const location = useLocation();
@@ -11,6 +12,9 @@ const NotFound = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 relative overflow-hidden">
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
       

@@ -3,6 +3,7 @@ import { Github, Mail, Gamepad2, Music, Code, Download } from "lucide-react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container } from "@tsparticles/engine";
+import { useTheme } from "next-themes";
 
 interface LanyardData {
   discord_user: {
@@ -44,6 +45,7 @@ interface LanyardData {
 }
 
 const Hero = () => {
+  const { theme } = useTheme();
   const [lanyardData, setLanyardData] = useState<LanyardData | null>(null);
   const [particlesInit, setParticlesInit] = useState(false);
   const [displayText, setDisplayText] = useState("daglaroglou");
@@ -102,7 +104,7 @@ const Hero = () => {
       },
       particles: {
         color: {
-          value: "#ffffff",
+          value: theme === "dark" ? "#ffffff" : "#000000",
         },
         links: {
           enable: false,
@@ -167,7 +169,7 @@ const Hero = () => {
       },
       detectRetina: true,
     }),
-    [],
+    [theme],
   );
 
   useEffect(() => {
@@ -350,7 +352,7 @@ const Hero = () => {
     };
   }, []);
 
-  // Memoize particles to prevent re-renders - only depends on init state
+  // Memoize particles to prevent re-renders - only depends on init state and options
   const particlesComponent = useMemo(() => {
     if (!particlesInit) return null;
     return (
@@ -363,7 +365,7 @@ const Hero = () => {
         />
       </div>
     );
-  }, [particlesInit]);
+  }, [particlesInit, particlesOptions]);
 
   return (
     <section className="min-h-screen flex items-start justify-center px-4 pt-16 pb-32 relative overflow-hidden">
@@ -566,7 +568,7 @@ const Hero = () => {
                   <div key={item.year} className="flex-1 flex flex-col items-center group relative">
                     {/* Station circle - on the line */}
                     <div className="relative z-10">
-                      <div className="w-6 h-6 rounded-full bg-background border-4 border-primary transition-all duration-300 group-hover:scale-125 group-hover:border-primary/80 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]" />
+                      <div className="w-6 h-6 rounded-full bg-background border-4 border-primary transition-all duration-300 group-hover:scale-125 group-hover:border-primary/80 group-hover:shadow-glow" />
                     </div>
                     
                     {/* Year - Always visible */}
@@ -615,16 +617,16 @@ const Hero = () => {
                   >
                     <div className="px-6 py-4 relative">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors">
+                        <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
                           {tech.name}
                         </span>
-                        <span className="text-sm font-mono text-white/60 group-hover:text-white transition-colors">
+                        <span className="text-sm font-mono text-muted-foreground group-hover:text-foreground">
                           {tech.level}%
                         </span>
                       </div>
-                      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-foreground/10 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-white/60 rounded-full transition-all duration-500 ease-out group-hover:bg-white"
+                          className="h-full bg-foreground/60 rounded-full transition-all duration-500 ease-out group-hover:bg-foreground"
                           style={{ 
                             width: `${tech.level}%`,
                             transitionDelay: '100ms'
@@ -653,16 +655,16 @@ const Hero = () => {
                   >
                     <div className="px-6 py-4 relative">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors">
+                        <span className="text-sm font-medium text-foreground/90 group-hover:text-foreground">
                           {tech.name}
                         </span>
-                        <span className="text-sm font-mono text-white/60 group-hover:text-white transition-colors">
+                        <span className="text-sm font-mono text-muted-foreground group-hover:text-foreground">
                           {tech.level}%
                         </span>
                       </div>
-                      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-foreground/10 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-white/60 rounded-full transition-all duration-500 ease-out group-hover:bg-white"
+                          className="h-full bg-foreground/60 rounded-full transition-all duration-500 ease-out group-hover:bg-foreground"
                           style={{ 
                             width: `${tech.level}%`,
                             transitionDelay: '100ms'

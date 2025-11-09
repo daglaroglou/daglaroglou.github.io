@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import blogPosts from "@/data/blog-posts.json";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -25,6 +26,9 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background py-12 px-4">
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
       <article className="max-w-3xl mx-auto">
         <Link 
           to="/blog" 

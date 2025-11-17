@@ -23,11 +23,10 @@ interface Year {
 const UniversityGrades = () => {
   const { student, overallAverage, overallECTS, years } = gradesData;
 
-  const getGradeColor = (grade: number | string) => {
+  const getGradeColor = (grade: number | string, passed: boolean) => {
     if (typeof grade !== "number") return "text-muted-foreground";
-    if (grade >= 8.5) return "text-green-500";
-    if (grade >= 6.5) return "text-blue-500";
-    if (grade >= 5) return "text-yellow-500";
+    if (!passed) return "text-red-500";
+    if (grade >= 5) return "text-green-500";
     return "text-red-500";
   };
 
@@ -90,7 +89,7 @@ const UniversityGrades = () => {
               </div>
             </div>
             <div className="flex items-end gap-2">
-              <span className={`text-4xl font-bold ${getGradeColor(overallAverage)}`}>
+              <span className={`text-4xl font-bold ${getGradeColor(overallAverage, true)}`}>
                 {overallAverage}
               </span>
               <span className="text-2xl text-muted-foreground mb-1">/10</span>
@@ -184,15 +183,10 @@ const UniversityGrades = () => {
                           </div>
                           <div className="flex items-center gap-2 ml-4">
                             <span
-                              className={`text-2xl font-bold ${getGradeColor(course.grade)}`}
+                              className={`text-2xl font-bold ${getGradeColor(course.grade, course.passed)}`}
                             >
                               {course.grade}
                             </span>
-                            {course.passed ? (
-                              <span className="text-green-500">✓</span>
-                            ) : (
-                              <span className="text-red-500">✗</span>
-                            )}
                           </div>
                         </div>
                       ))}

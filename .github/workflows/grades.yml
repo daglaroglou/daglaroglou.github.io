@@ -35,12 +35,14 @@ jobs:
           
       - name: Check if grades changed
         id: check_changes
+        shell: powershell
         run: |
-          if git diff --quiet src/data/grades.json; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
+          git diff --quiet src/data/grades.json
+          if ($LASTEXITCODE -eq 0) {
+            echo "changed=false" >> $env:GITHUB_OUTPUT
+          } else {
+            echo "changed=true" >> $env:GITHUB_OUTPUT
+          }
           
       - name: Commit and push if changed
         if: steps.check_changes.outputs.changed == 'true'

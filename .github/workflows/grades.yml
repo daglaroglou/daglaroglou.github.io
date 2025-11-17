@@ -6,6 +6,10 @@ on:
     - cron: '0 8 1 * *'
   workflow_dispatch: # Allow manual trigger
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   update-grades:
     runs-on: windows-latest
@@ -52,4 +56,11 @@ jobs:
           git add src/data/grades.json
           git commit -m "Update university grades"
           git push
+          
+      - name: Trigger deployment
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy.yml
 

@@ -1,0 +1,53 @@
+name: Update University Grades
+
+on:
+  schedule:
+    # Run on the 1st of every month at 8:00 AM UTC
+    - cron: '0 8 1 * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-grades:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CHECKOUT_TOKEN }}
+        
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          
+      - name: Install dependencies
+        run: |
+          pip install selenium requests chromedriver-autoinstaller
+          
+      - name: Run grades scraper
+        env:
+          USERNAME: ${{ secrets.UNI_USERNAME }}
+          PASSWORD: ${{ secrets.UNI_PASSWORD }}
+        run: |
+          cd .github/workflows
+          python ylida.py
+          
+      - name: Check if grades changed
+        id: check_changes
+        run: |
+          if git diff --quiet src/data/grades.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/grades.json
+          git commit -m "Update university grades"
+          git push
+

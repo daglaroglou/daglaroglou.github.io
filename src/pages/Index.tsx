@@ -5,6 +5,7 @@ import UniversityGrades from "@/components/UniversityGrades";
 import BlogPreview from "@/components/BlogPreview";
 import Donation from "@/components/Donation";
 import ThemeToggle from "@/components/ThemeToggle";
+import CheckpointSlider from "@/components/CheckpointSlider";
 
 const Index = () => {
   return (
@@ -12,12 +13,25 @@ const Index = () => {
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
       </div>
-      <Hero />
-      <GitHubRepos />
-      <PCStats />
-      <UniversityGrades />
-      <BlogPreview />
-      <Donation />
+      <CheckpointSlider />
+      <section id="hero">
+        <Hero />
+      </section>
+      <section id="github">
+        <GitHubRepos />
+      </section>
+      <section id="pcstats">
+        <PCStats />
+      </section>
+      <section id="grades">
+        <UniversityGrades />
+      </section>
+      <section id="blog">
+        <BlogPreview />
+      </section>
+      <section id="donation">
+        <Donation />
+      </section>
     </div>
   );
 };

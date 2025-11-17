@@ -37,11 +37,11 @@ jobs:
         id: check_changes
         shell: powershell
         run: |
-          git diff --quiet src/data/grades.json
-          if ($LASTEXITCODE -eq 0) {
-            echo "changed=false" >> $env:GITHUB_OUTPUT
+          $diff = git diff src/data/grades.json
+          if ([string]::IsNullOrEmpty($diff)) {
+            "changed=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           } else {
-            echo "changed=true" >> $env:GITHUB_OUTPUT
+            "changed=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           }
           
       - name: Commit and push if changed

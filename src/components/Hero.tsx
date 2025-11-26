@@ -1,9 +1,10 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Github, Mail, Gamepad2, Music, Code, Download } from "lucide-react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container } from "@tsparticles/engine";
 import { useTheme } from "next-themes";
+import profileImage from "@public/image.png";
 
 interface LanyardData {
   discord_user: {
@@ -46,6 +47,7 @@ interface LanyardData {
 
 const Hero = () => {
   const { theme } = useTheme();
+  const birthDate = useMemo(() => new Date(Date.UTC(2005, 4, 27, 0, 0, 0)), []);
   const [lanyardData, setLanyardData] = useState<LanyardData | null>(null);
   const [particlesInit, setParticlesInit] = useState(false);
   const [displayText, setDisplayText] = useState("daglaroglou");
@@ -233,6 +235,63 @@ const Hero = () => {
   };
 
   const [, forceUpdate] = useState({});
+  const calculateLiveAge = useCallback(() => {
+    const now = new Date();
+    const nowUtc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+    let years = nowUtc.getUTCFullYear() - birthDate.getUTCFullYear();
+    const currentYearBirthday = new Date(Date.UTC(
+      nowUtc.getUTCFullYear(),
+      birthDate.getUTCMonth(),
+      birthDate.getUTCDate(),
+      birthDate.getUTCHours(),
+      birthDate.getUTCMinutes(),
+      birthDate.getUTCSeconds()
+    ));
+    if (nowUtc < currentYearBirthday) {
+      years -= 1;
+    }
+    const lastBirthday = new Date(Date.UTC(
+      birthDate.getUTCFullYear() + years,
+      birthDate.getUTCMonth(),
+      birthDate.getUTCDate(),
+      birthDate.getUTCHours(),
+      birthDate.getUTCMinutes(),
+      birthDate.getUTCSeconds()
+    ));
+    const nextBirthday = new Date(Date.UTC(
+      birthDate.getUTCFullYear() + years + 1,
+      birthDate.getUTCMonth(),
+      birthDate.getUTCDate(),
+      birthDate.getUTCHours(),
+      birthDate.getUTCMinutes(),
+      birthDate.getUTCSeconds()
+    ));
+    let diffMs = nowUtc.getTime() - lastBirthday.getTime();
+    const fractionalProgress = diffMs / (nextBirthday.getTime() - lastBirthday.getTime());
+    const dayMs = 1000 * 60 * 60 * 24;
+    const hourMs = 1000 * 60 * 60;
+    const minuteMs = 1000 * 60;
+    const days = Math.floor(diffMs / dayMs);
+    diffMs -= days * dayMs;
+    const hours = Math.floor(diffMs / hourMs);
+    diffMs -= hours * hourMs;
+    const minutes = Math.floor(diffMs / minuteMs);
+    diffMs -= minutes * minuteMs;
+    const seconds = Math.floor(diffMs / 1000);
+    const decimalYears = years + fractionalProgress;
+    const decimalLabel = `${decimalYears.toFixed(9)} years`;
+    return { years, days, hours, minutes, seconds, decimalYears, decimalLabel };
+  }, [birthDate]);
+  const [liveAge, setLiveAge] = useState(calculateLiveAge);
+  useEffect(() => {
+    let animationFrame: number;
+    const tick = () => {
+      setLiveAge(calculateLiveAge());
+      animationFrame = requestAnimationFrame(tick);
+    };
+    animationFrame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [calculateLiveAge]);
   useEffect(() => {
     const interval = setInterval(() => forceUpdate({}), 1000);
     return () => clearInterval(interval);
@@ -550,6 +609,57 @@ const Hero = () => {
             </a>
           </div>
 
+          {/* Personal Info */}
+          <div className="mt-8 max-w-4xl mx-auto">
+            <div className="glass-card rounded-3xl p-6 md:p-8">
+              <div className="flex flex-col md:flex-row md:items-stretch md:justify-between gap-6">
+                <div className="space-y-4 max-w-sm flex-1 flex flex-col md:h-full">
+                  <div className="space-y-2">
+                    <p className="text-xs uppercase tracking-[0.3em] text-primary/70">Quick Overview</p>
+                    <h3 className="text-2xl font-bold glow-text">Personal Information</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      A snapshot of who I am outside the code editor—my roots, preferred ways of collaborating,
+                      and what drives my work every day.
+                    </p>
+                  </div>
+                  <div className="relative w-full rounded-2xl overflow-hidden border border-border/40 hover:border-primary/50 transition-colors duration-500 flex-1 min-h-[280px] md:h-full group">
+                    <img 
+                      src={profileImage} 
+                      alt="Christos Daglaroglou portrait" 
+                      className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.08] group-hover:rotate-1 filter transition-colors group-hover:grayscale group-hover:contrast-125 group-hover:brightness-105" 
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-background/50 via-transparent to-primary/20 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-40" />
+                    <div className="absolute inset-0 bg-foreground/40 opacity-0 group-hover:opacity-25 mix-blend-luminosity transition-opacity duration-700" aria-hidden />
+                    <div className="absolute inset-0 bg-primary/30 opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-700" aria-hidden />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+                  {[
+                    { label: "Age", value: liveAge.decimalLabel },
+                    { label: "Student", value: "University of Macedonia" },
+                    { label: "Location", value: "Thessaloniki, Greece" },
+                    { label: "Experience", value: "4+ years excperience" },
+                    { label: "Collaboration", value: "Remote-first & async friendly" },
+                    { label: "Languages", value: "Greek, English" },
+                    { label: "Focus", value: "Dev tools & platform engineering" },
+                    { label: "Availability", value: "Open to selective freelance" },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="glass-card rounded-2xl p-4 border border-border/40 hover:border-primary/40 hover-lift transition-all hover:scale-105 min-h-[120px] flex flex-col"
+                    >
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">{item.label}</p>
+                      <div className="flex-1 flex items-center justify-center text-center mt-1">
+                        <p className="text-base font-semibold text-foreground">{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Timeline - Metro Station Style */}
           <div className="mt-12 relative max-w-3xl mx-auto">
             <div className="relative px-8 py-8">
@@ -647,6 +757,7 @@ const Hero = () => {
                   { name: "HTML/CSS", level: 95 },
                   { name: "GTK Framework", level: 70 },
                   { name: "Qt Framework", level: 50 },
+                  { name: "MAUI Framework", level: 20 },
                 ].map((tech, index) => (
                   <div 
                     key={tech.name}

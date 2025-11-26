@@ -105,6 +105,19 @@ All colors MUST be HSL.
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Custom text selection colors for light/dark themes */
+  ::selection,
+  ::-moz-selection {
+    background-color: hsl(var(--primary) / 0.25);
+    color: hsl(var(--primary-foreground));
+  }
+
+  .dark ::selection,
+  .dark ::-moz-selection {
+    background-color: hsl(var(--primary) / 0.4);
+    color: hsl(var(--primary-foreground));
+  }
+
   /* View Transitions API for smooth theme changes */
   ::view-transition-old(root),
   ::view-transition-new(root) {

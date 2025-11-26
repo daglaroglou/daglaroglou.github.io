@@ -4,7 +4,6 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container } from "@tsparticles/engine";
 import { useTheme } from "next-themes";
-import profileImage from "@public/image.png";
 
 interface LanyardData {
   discord_user: {
@@ -624,7 +623,7 @@ const Hero = () => {
                   </div>
                   <div className="relative w-full rounded-2xl overflow-hidden border border-border/40 hover:border-primary/50 transition-colors duration-500 flex-1 min-h-[280px] md:h-full group">
                     <img 
-                      src={profileImage} 
+                      src="/image.png" 
                       alt="Christos Daglaroglou portrait" 
                       className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.08] group-hover:rotate-1 filter transition-colors group-hover:grayscale group-hover:contrast-125 group-hover:brightness-105" 
                       loading="lazy"

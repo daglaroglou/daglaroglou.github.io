@@ -1,5 +1,14 @@
 [
   {
+    "id": "dag-kernel-a54",
+    "title": "DΛG Kernel: Unleashing the Power of Samsung Galaxy A54x",
+    "excerpt": "A custom Android kernel for Samsung Galaxy devices with Exynos 1380 - optimized for performance and stability.",
+    "content": "I'm excited to share **DΛG Kernel** (力を解き放つ - \"Unleash the Power\") - a custom Android kernel I've developed for Samsung Galaxy devices with the Exynos 1380 chipset.\n\n## 🚀 What is DΛG Kernel?\n\nDΛG Kernel is a high-performance custom kernel designed for Samsung Galaxy devices with Exynos 1380. It balances performance optimization with system stability.\n\n## ⚡ Key Features\n\n- **CPU I/O Schedulers Boost** - Safe CPU frequency boosting for better responsiveness\n- **120Hz Display Support** - Smooth high refresh rate experience\n- **Live Patching** - Runtime kernel updates without rebooting\n- **Bluetooth LE Audio** - Latest Bluetooth audio standards\n- **Root Support** - Variants available for power users\n\n## 📱 Supported Devices\n\n### ✅ Fully Tested\n- Galaxy A54 5G (a54x)\n- Galaxy M54 5G (m54x)\n\n### Compatible (Untested)\n- Galaxy F54, A35, M35, A36, F36, and Jump 4 devices with Exynos 1380\n\n## 🛠️ What I Learned\n\nDeveloping this kernel taught me about:\n- Low-level Linux kernel architecture and scheduler optimization\n- ARM64 assembly and CPU pipeline optimization\n- Device tree management and hardware configuration\n- Power management and thermal constraints\n- Managing a large codebase based on Samsung's OSRC\n\n## 🔮 Future Plans\n\n- GPU overclocking with safety limits\n- ML-based battery optimization\n- Advanced thermal management\n- Expanded device support\n\n## 🌟 Get Started\n\nVisit the [GitHub repository](https://github.com/daglaroglou/android_kernel_samsung_a54x) for installation instructions and latest releases.\n\n⚠️ **Note**: Installing custom kernels voids warranties. Backup your data first.\n\n---\n\n**Project Links:**\n- GitHub: [daglaroglou/android_kernel_samsung_a54x](https://github.com/daglaroglou/android_kernel_samsung_a54x)\n- Latest Release: [DΛG Kernels](https://github.com/daglaroglou/android_kernel_samsung_a54x/releases)",
+    "date": "2025-12-10",
+    "tags": ["kernel", "android", "linux", "samsung", "exynos", "performance", "opensource", "portfolio"],
+    "image": "https://opengraph.githubassets.com/1/daglaroglou/android_kernel_samsung_a54x"
+  },
+  {
     "id": "aesir-samsung-device-management",
     "title": "Aesir: The Ultimate Samsung Device Management Suite",
     "excerpt": "Building a revolutionary cross-platform GUI application for Samsung device management using .NET and C#.",

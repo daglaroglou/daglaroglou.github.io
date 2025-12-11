@@ -4,6 +4,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container } from "@tsparticles/engine";
 import { useTheme } from "next-themes";
+import WakaTimeStats from "./WakaTimeStats";
 
 interface LanyardData {
   discord_user: {
@@ -541,6 +542,9 @@ const Hero = () => {
               )}
             </div>
           )}
+
+          {/* WakaTime Stats */}
+          <WakaTimeStats />
 
           {/* Social Media Links */}
           <div className="flex items-center justify-center gap-3 flex-wrap">

@@ -676,7 +676,7 @@ const Hero = () => {
                   { year: "2021", event: "Joined @Magnimont", description: "Joined Magnimont, a software developer." },
                   { year: "2023", event: "Graduated from High School", description: "Graduated from Efkleidis Vocational High School." },
                   { year: "2024", event: "Went in Univercity of Macedonia", description: "Went in Univercity of Macedonia, Applied Informatics Department." },
-                  { year: "2025", event: "Released my first project", description: "Released Aesir, a software to flash custom firmware to Samsung devices." },
+                  { year: "2026", event: "Completed first project", description: "E-shop for a local narghile business in Greece." },
                 ].map((item, index) => (
                   <div key={item.year} className="flex-1 flex flex-col items-center group relative">
                     {/* Station circle - on the line */}

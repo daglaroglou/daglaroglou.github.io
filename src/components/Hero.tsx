@@ -627,7 +627,7 @@ const Hero = () => {
                   </div>
                   <div className="relative w-full rounded-2xl overflow-hidden border border-border/40 hover:border-primary/50 transition-colors duration-500 flex-1 min-h-[280px] md:h-full group">
                     <img 
-                      src="/image.png" 
+                      src="/image.webp" 
                       alt="Christos Daglaroglou portrait" 
                       className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.08] group-hover:rotate-1 filter transition-colors group-hover:grayscale group-hover:contrast-125 group-hover:brightness-105" 
                       loading="lazy"

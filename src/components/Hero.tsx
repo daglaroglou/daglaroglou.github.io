@@ -558,7 +558,7 @@ const Hero = () => {
               <Github className="w-5 h-5" />
             </a>
             <a 
-              href="mailto:christos.daglaroglou@gmail.com"
+              href="mailto:contact@dag.is-a.dev"
               className="glass-card p-3 rounded-full hover-lift transition-all hover:scale-110"
               aria-label="Email"
             >

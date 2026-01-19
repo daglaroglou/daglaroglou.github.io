@@ -105,17 +105,43 @@ All colors MUST be HSL.
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom text selection colors for light/dark themes */
-  ::selection,
-  ::-moz-selection {
-    background-color: hsl(var(--primary) / 0.25);
-    color: hsl(var(--primary-foreground));
+  /* Global link styles - match theme colors */
+  a {
+    color: hsl(var(--primary));
+    transition: color 0.2s ease;
   }
 
-  .dark ::selection,
-  .dark ::-moz-selection {
-    background-color: hsl(var(--primary) / 0.4);
-    color: hsl(var(--primary-foreground));
+  a:hover {
+    color: hsl(var(--primary) / 0.8);
+  }
+
+  .dark a {
+    color: hsl(var(--primary));
+  }
+
+  .dark a:hover {
+    color: hsl(var(--primary) / 0.7);
+  }
+
+  /* Custom text selection colors for light/dark themes */
+  *::selection {
+    background-color: hsl(0, 0%, 8%, 0.2) !important;
+    color: hsl(0, 0%, 98%) !important;
+  }
+
+  *::-moz-selection {
+    background-color: hsl(0, 0%, 8%, 0.2) !important;
+    color: hsl(0, 0%, 98%) !important;
+  }
+
+  .dark *::selection {
+    background-color: hsl(0, 0%, 98%, 0.3) !important;
+    color: hsl(0, 0%, 8%) !important;
+  }
+
+  .dark *::-moz-selection {
+    background-color: hsl(0, 0%, 98%, 0.3) !important;
+    color: hsl(0, 0%, 8%) !important;
   }
 
   /* View Transitions API for smooth theme changes */

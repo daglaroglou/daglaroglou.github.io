@@ -108,7 +108,7 @@ const UniversityGrades = () => {
               </div>
             </div>
             <div className="flex items-end gap-2">
-              <span className="text-4xl font-bold text-blue-500">{overallECTS}</span>
+              <span className="text-4xl font-bold text-primary">{overallECTS}</span>
               <span className="text-2xl text-muted-foreground mb-1">/240</span>
             </div>
           </Card>

@@ -75,7 +75,7 @@ const BlogPost = () => {
               h2: ({node, ...props}) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
               h3: ({node, ...props}) => <h3 className="text-xl font-bold mt-4 mb-2" {...props} />,
               p: ({node, ...props}) => <p className="text-foreground/90 leading-relaxed mb-4" {...props} />,
-              a: ({node, ...props}) => <a className="text-foreground underline hover:text-foreground/80" {...props} />,
+              a: ({node, ...props}) => <a className="text-primary underline hover:text-primary/80 transition-colors" {...props} />,
               code: ({node, inline, ...props}: any) => 
                 inline ? (
                   <code className="bg-muted px-1.5 py-0.5 rounded text-sm" {...props} />

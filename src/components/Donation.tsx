@@ -17,7 +17,7 @@ const Donation = () => {
       icon: DollarSign,
       description: "One-time donation via PayPal",
       link: "https://paypal.me/daglaroglou",
-      color: "text-blue-500",
+      color: "text-primary",
     },
     {
       name: "Revolut",

@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   update-grades:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout repository
@@ -27,7 +27,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install selenium requests chromedriver-autoinstaller
+          pip install requests beautifulsoup4
           
       - name: Run grades scraper
         env:
@@ -39,14 +39,12 @@ jobs:
           
       - name: Check if grades changed
         id: check_changes
-        shell: powershell
         run: |
-          $diff = git diff src/data/grades.json
-          if ([string]::IsNullOrEmpty($diff)) {
-            "changed=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-          } else {
-            "changed=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-          }
+          if git diff --quiet src/data/grades.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
           
       - name: Commit and push if changed
         if: steps.check_changes.outputs.changed == 'true'

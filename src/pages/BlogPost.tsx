@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import blogPosts from "@/data/blog-posts.json";
 import ThemeToggle from "@/components/ThemeToggle";
+import ParticlesBackground from "@/components/ParticlesBackground";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -25,11 +26,12 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4">
+    <div className="min-h-screen bg-background py-12 px-4 relative">
+      <ParticlesBackground />
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
       </div>
-      <article className="max-w-3xl mx-auto">
+      <article className="max-w-3xl mx-auto relative z-10">
         <Link 
           to="/blog" 
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"

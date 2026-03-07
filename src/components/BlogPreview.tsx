@@ -9,7 +9,7 @@ const BlogPreview = () => {
   const recentPosts = blogPosts.slice(0, 3);
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-secondary/20 to-background">
+    <section className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-12">
           <div>

@@ -430,7 +430,6 @@ const Hero = () => {
     <section className="min-h-screen flex items-start justify-center px-4 pt-16 pb-32 relative overflow-hidden">
       {/* Particles background - memoized to prevent re-renders */}
       {particlesComponent}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none z-0" />
       
       <div className="max-w-4xl w-full relative z-10 animate-fade-in">
         <div className="text-center space-y-8">
@@ -614,9 +613,10 @@ const Hero = () => {
           <div className="flex items-center justify-center">
             <a 
               href="/resume.pdf"
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="glass-card px-6 py-3 rounded-full hover-lift transition-all hover:scale-110 flex items-center gap-2"
-              aria-label="Download Resume"
+              aria-label="View Resume"
             >
               <Download className="w-5 h-5" />
               <span className="font-medium">Download Resume</span>

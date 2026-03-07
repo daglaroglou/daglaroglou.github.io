@@ -1,0 +1,20 @@
+[
+  {
+    "id": "shishaholics",
+    "title": "Shishaholics.",
+    "description": "E-commerce website for a local narghile (hookah) business in Greece. Full-featured online store with product catalog, cart, and checkout.",
+    "url": "https://shishaholics.store",
+    "image": null,
+    "tags": ["E-Commerce", "Wix"],
+    "year": "2026"
+  },
+  {
+    "id": "siggos",
+    "title": "Siggos Suites",
+    "description": "Website for a rentable suites in Agios Nikolaos, Halkidiki, Greece. Features a presentation of the suites and a contact form.",
+    "url": "https://siggos-suites.gr",
+    "image": null,
+    "tags": ["Suites", "React", "TypeScript", "Vue"],
+    "year": "2026"
+  }
+]

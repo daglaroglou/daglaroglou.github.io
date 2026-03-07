@@ -36,7 +36,7 @@ const Donation = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-background to-secondary/20">
+    <section className="py-20 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6 animate-pulse-glow">

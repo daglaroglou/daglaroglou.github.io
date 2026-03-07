@@ -64,7 +64,7 @@ const UniversityGrades = () => {
   }, 0);
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-secondary/20 via-background to-secondary/20">
+    <section className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">

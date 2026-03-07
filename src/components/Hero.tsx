@@ -427,7 +427,7 @@ const Hero = () => {
   }, [particlesInit, particlesOptions]);
 
   return (
-    <section className="min-h-screen flex items-start justify-center px-4 pt-16 pb-32 relative overflow-hidden">
+    <section className="min-h-screen flex items-start justify-center px-4 pt-24 pb-32 relative overflow-hidden sm:pt-16">
       {/* Particles background - memoized to prevent re-renders */}
       {particlesComponent}
       

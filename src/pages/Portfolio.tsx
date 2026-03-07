@@ -18,12 +18,12 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 relative">
+    <div className="min-h-screen bg-background pt-24 pb-12 px-4 relative sm:pt-12">
       <ParticlesBackground />
       <div className="fixed top-6 left-6 z-50">
         <Link
           to="/"
-          className="glass-card px-4 py-2 rounded-full hover-lift transition-all text-sm font-medium"
+          className="glass-card px-4 py-2 rounded-full hover-lift transition-all text-sm font-medium mb-6 sm:mb-0"
         >
           Home
         </Link>

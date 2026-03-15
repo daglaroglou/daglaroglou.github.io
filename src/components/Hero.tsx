@@ -612,7 +612,7 @@ const Hero = () => {
           {/* Download Resume Button */}
           <div className="flex items-center justify-center">
             <a 
-              href="/resume.pdf"
+              href="https://dag.is-a.dev/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-card px-6 py-3 rounded-full hover-lift transition-all hover:scale-110 flex items-center gap-2"

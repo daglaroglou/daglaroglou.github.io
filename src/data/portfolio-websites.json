@@ -16,5 +16,14 @@
     "image": null,
     "tags": ["Suites", "React", "TypeScript", "Vue"],
     "year": "2026"
+  },
+  {
+    "id": "rigtree",
+    "title": "RigTree",
+    "description": "RigTree is a web application to share your rigs. Like Linktree, but for your rigs.",
+    "url": "https://rigtree.pages.dev",
+    "image": null,
+    "tags": ["React", "TypeScript", "Vite"],
+    "year": "2026"
   }
 ]

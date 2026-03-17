@@ -4,8 +4,8 @@
     "lastName": "ΔΑΓΛΑΡΟΓΛΟΥ",
     "studentNo": "ics24130"
   },
-  "overallAverage": 6.98,
-  "overallECTS": 150,
+  "overallAverage": 6.95,
+  "overallECTS": 155,
   "years": [
     {
       "year": "Year 1",
@@ -218,6 +218,13 @@
         {
           "semester": "Ε εξάμηνο",
           "courses": [
+            {
+              "courseCode": "CSC503",
+              "courseName": "ΣΥΣΤΗΜΑΤΑ ΕΠΙΚΟΙΝΩΝΙΩΝ",
+              "grade": 6,
+              "ects": 5,
+              "passed": true
+            },
             {
               "courseCode": "CSC502",
               "courseName": "ΣΥΣΤΗΜΑΤΑ ΒΑΣΕΩΝ ΔΕΔΟΜΕΝΩΝ",

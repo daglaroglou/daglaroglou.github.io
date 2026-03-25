@@ -14,7 +14,7 @@ const Index = () => {
       <div className="fixed top-6 left-6 z-50">
         <Link
           to="/portfolio"
-          className="glass-card px-4 py-2 rounded-full hover-lift transition-all text-sm font-medium mb-6 sm:mb-0"
+          className="glass-card px-4 py-2 rounded-full hover-lift transition-all text-sm font-medium mb-6 sm:mb-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Portfolio
         </Link>

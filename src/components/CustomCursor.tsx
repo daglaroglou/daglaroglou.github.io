@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 const CustomCursor = () => {
   const isMobile = useIsMobile();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
 
   useEffect(() => {
-    // Don't add event listeners on mobile
-    if (isMobile) {
+    if (isMobile || prefersReducedMotion) {
       return;
     }
 
@@ -29,10 +30,9 @@ const CustomCursor = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [isMobile]);
+  }, [isMobile, prefersReducedMotion]);
 
-  // Don't render custom cursor on mobile devices
-  if (isMobile) {
+  if (isMobile || prefersReducedMotion) {
     return null;
   }
 

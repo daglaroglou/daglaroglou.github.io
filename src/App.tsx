@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
+import { useLayoutEffect } from "react";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -13,10 +15,19 @@ import CustomCursor from "./components/CustomCursor";
 
 const queryClient = new QueryClient();
 
+function DocumentReducedMotion() {
+  const reduced = usePrefersReducedMotion();
+  useLayoutEffect(() => {
+    document.documentElement.toggleAttribute("data-reduced-motion", reduced);
+  }, [reduced]);
+  return null;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <TooltipProvider>
+        <DocumentReducedMotion />
         <CustomCursor />
         <Toaster />
         <Sonner />

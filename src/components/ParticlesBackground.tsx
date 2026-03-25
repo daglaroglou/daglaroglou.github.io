@@ -3,18 +3,28 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container } from "@tsparticles/engine";
 import { useTheme } from "next-themes";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 const ParticlesBackground = () => {
   const { theme } = useTheme();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [particlesInit, setParticlesInit] = useState(false);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setParticlesInit(false);
+      return;
+    }
+    let cancelled = false;
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => {
-      setParticlesInit(true);
+      if (!cancelled) setParticlesInit(true);
     });
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [prefersReducedMotion]);
 
   const particlesLoaded = async (_container?: Container): Promise<void> => {};
 
@@ -116,7 +126,7 @@ const ParticlesBackground = () => {
     [theme],
   );
 
-  if (!particlesInit) return null;
+  if (prefersReducedMotion || !particlesInit) return null;
 
   return (
     <div

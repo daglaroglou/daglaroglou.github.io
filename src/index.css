@@ -98,6 +98,12 @@ All colors MUST be HSL.
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -158,13 +164,13 @@ All colors MUST be HSL.
     z-index: 2;
   }
   
-  /* Hide default cursor only on non-touch devices */
+  /* Hide default cursor only when custom cursor is active (not reduced motion) */
   @media (hover: hover) and (pointer: fine) {
-    body {
+    html:not([data-reduced-motion]) body {
       cursor: none;
     }
-    
-    * {
+
+    html:not([data-reduced-motion]) body * {
       cursor: none !important;
     }
   }
@@ -450,6 +456,18 @@ All colors MUST be HSL.
 
 .glitch-text:hover {
   animation: glitch 0.4s steps(2, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float {
+    animation: none !important;
+  }
+
+  .glitch-text:hover,
+  .glitch-text:hover::before,
+  .glitch-text:hover::after {
+    animation: none !important;
+  }
 }
 
 .glitch-text::before,

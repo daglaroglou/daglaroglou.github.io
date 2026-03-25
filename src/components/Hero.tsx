@@ -4,6 +4,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Container } from "@tsparticles/engine";
 import { useTheme } from "next-themes";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import WakaTimeStats from "./WakaTimeStats";
 
 interface LanyardData {
@@ -47,6 +48,7 @@ interface LanyardData {
 
 const Hero = () => {
   const { theme } = useTheme();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const birthDate = useMemo(() => new Date(Date.UTC(2005, 4, 27, 0, 0, 0)), []);
   const [lanyardData, setLanyardData] = useState<LanyardData | null>(null);
   const [particlesInit, setParticlesInit] = useState(false);
@@ -65,16 +67,22 @@ const Hero = () => {
   const [isTypingSubtitle, setIsTypingSubtitle] = useState(false);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setParticlesInit(false);
+      return;
+    }
+    let cancelled = false;
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => {
-      setParticlesInit(true);
+      if (!cancelled) setParticlesInit(true);
     });
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [prefersReducedMotion]);
 
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log(container);
-  };
+  const particlesLoaded = async (_container?: Container): Promise<void> => {};
 
   const particlesOptions = useMemo(
     () => ({
@@ -413,9 +421,13 @@ const Hero = () => {
 
   // Memoize particles to prevent re-renders - only depends on init state and options
   const particlesComponent = useMemo(() => {
-    if (!particlesInit) return null;
+    if (prefersReducedMotion || !particlesInit) return null;
     return (
-      <div className="absolute inset-0 z-0" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
+      <div
+        className="absolute inset-0 z-0"
+        style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, pointerEvents: "none" }}
+        aria-hidden
+      >
         <Particles
           id="tsparticles"
           particlesLoaded={particlesLoaded}
@@ -424,7 +436,7 @@ const Hero = () => {
         />
       </div>
     );
-  }, [particlesInit, particlesOptions]);
+  }, [particlesInit, particlesOptions, prefersReducedMotion]);
 
   return (
     <section className="min-h-screen flex items-start justify-center px-4 pt-24 pb-32 relative overflow-hidden sm:pt-16">

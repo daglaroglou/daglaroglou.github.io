@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 interface Checkpoint {
   id: string;
@@ -19,6 +20,7 @@ const checkpoints: Checkpoint[] = [
 const CheckpointSlider = () => {
   const [activeCheckpoint, setActiveCheckpoint] = useState<string>("hero");
   const [isVisible, setIsVisible] = useState(true);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,13 +64,14 @@ const CheckpointSlider = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth",
+        behavior: prefersReducedMotion ? "auto" : "smooth",
       });
     }
   };
 
   return (
-    <div
+    <nav
+      aria-label="Page sections"
       className={cn(
         "fixed left-6 top-1/2 -translate-y-1/2 z-40 transition-all duration-300 hidden md:block",
         isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full pointer-events-none"
@@ -87,16 +90,21 @@ const CheckpointSlider = () => {
         {checkpoints.map((checkpoint) => (
           <button
             key={checkpoint.id}
+            type="button"
             onClick={() => scrollToCheckpoint(checkpoint.id)}
             className={cn(
-              "relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group",
+              "relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               activeCheckpoint === checkpoint.id
                 ? "text-primary-foreground scale-110"
                 : "text-muted-foreground hover:text-foreground hover:scale-110"
             )}
+            aria-label={`Go to ${checkpoint.label}`}
+            aria-current={activeCheckpoint === checkpoint.id ? "location" : undefined}
             title={checkpoint.label}
           >
-            <span className="text-xl">{checkpoint.icon}</span>
+            <span className="text-xl" aria-hidden>
+              {checkpoint.icon}
+            </span>
             
             {/* Tooltip */}
             <div className="absolute left-full ml-4 px-3 py-1.5 bg-popover text-popover-foreground text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-lg border border-border">
@@ -105,7 +113,7 @@ const CheckpointSlider = () => {
           </button>
         ))}
       </div>
-    </div>
+    </nav>
   );
 };
 

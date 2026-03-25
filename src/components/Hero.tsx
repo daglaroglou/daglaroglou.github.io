@@ -1,10 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Github, Mail, Gamepad2, Music, Code, Download } from "lucide-react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
-import type { Container } from "@tsparticles/engine";
-import { useTheme } from "next-themes";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import CanvasParticles from "@/components/CanvasParticles";
 import WakaTimeStats from "./WakaTimeStats";
 
 interface LanyardData {
@@ -47,11 +43,8 @@ interface LanyardData {
 }
 
 const Hero = () => {
-  const { theme } = useTheme();
-  const prefersReducedMotion = usePrefersReducedMotion();
   const birthDate = useMemo(() => new Date(Date.UTC(2005, 4, 27, 0, 0, 0)), []);
   const [lanyardData, setLanyardData] = useState<LanyardData | null>(null);
-  const [particlesInit, setParticlesInit] = useState(false);
   const [displayText, setDisplayText] = useState("daglaroglou");
   const [isHovering, setIsHovering] = useState(false);
   
@@ -65,122 +58,6 @@ const Hero = () => {
   const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
   const [displaySubtitle, setDisplaySubtitle] = useState(subtitles[0]);
   const [isTypingSubtitle, setIsTypingSubtitle] = useState(false);
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setParticlesInit(false);
-      return;
-    }
-    let cancelled = false;
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      if (!cancelled) setParticlesInit(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [prefersReducedMotion]);
-
-  const particlesLoaded = async (_container?: Container): Promise<void> => {};
-
-  const particlesOptions = useMemo(
-    () => ({
-      background: {
-        color: {
-          value: "transparent",
-        },
-      },
-      fpsLimit: 60,
-      interactivity: {
-        events: {
-          onClick: {
-            enable: true,
-            mode: "bubble",
-          },
-          onHover: {
-            enable: true,
-            mode: "bubble",
-          },
-        },
-        modes: {
-          bubble: {
-            distance: 200,
-            size: 8,
-            duration: 2,
-            opacity: 0.8,
-          },
-        },
-      },
-      particles: {
-        color: {
-          value: theme === "dark" ? "#ffffff" : "#000000",
-        },
-        links: {
-          enable: false,
-        },
-        move: {
-          direction: "top" as const,
-          enable: true,
-          outModes: {
-            default: "out" as const,
-          },
-          random: false,
-          speed: { min: 0.3, max: 1 },
-          straight: false,
-          warp: true,
-        },
-        number: {
-          density: {
-            enable: true,
-          },
-          value: 40,
-        },
-        opacity: {
-          value: { min: 0.2, max: 0.6 },
-          animation: {
-            enable: true,
-            speed: 0.8,
-            minimumValue: 0.1,
-            sync: false,
-          },
-        },
-        rotate: {
-          value: { min: 0, max: 360 },
-          animation: {
-            enable: true,
-            speed: 5,
-            sync: false,
-          },
-        },
-        shape: {
-          type: ["circle", "square", "triangle", "polygon"],
-          options: {
-            polygon: {
-              sides: 6,
-            },
-          },
-        },
-        size: {
-          value: { min: 2, max: 6 },
-          animation: {
-            enable: false,
-          },
-        },
-        wobble: {
-          enable: true,
-          distance: 10,
-          speed: 3,
-        },
-        roll: {
-          enable: true,
-          speed: 2,
-        },
-      },
-      detectRetina: true,
-    }),
-    [theme],
-  );
 
   useEffect(() => {
     const fetchLanyard = async () => {
@@ -419,29 +296,22 @@ const Hero = () => {
     };
   }, []);
 
-  // Memoize particles to prevent re-renders - only depends on init state and options
-  const particlesComponent = useMemo(() => {
-    if (prefersReducedMotion || !particlesInit) return null;
-    return (
-      <div
-        className="absolute inset-0 z-0"
-        style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, pointerEvents: "none" }}
-        aria-hidden
-      >
-        <Particles
-          id="tsparticles"
-          particlesLoaded={particlesLoaded}
-          options={particlesOptions}
-          className="absolute inset-0"
-        />
-      </div>
-    );
-  }, [particlesInit, particlesOptions, prefersReducedMotion]);
-
   return (
     <section className="min-h-screen flex items-start justify-center px-4 pt-24 pb-32 relative overflow-hidden sm:pt-16">
-      {/* Particles background - memoized to prevent re-renders */}
-      {particlesComponent}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          pointerEvents: "none",
+        }}
+        aria-hidden
+      >
+        <CanvasParticles className="absolute inset-0 h-full w-full" />
+      </div>
       
       <div className="max-w-4xl w-full relative z-10 animate-fade-in">
         <div className="text-center space-y-8">

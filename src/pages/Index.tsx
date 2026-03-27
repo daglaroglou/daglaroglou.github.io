@@ -30,11 +30,19 @@ const Index = () => {
       <section id="github">
         <GitHubRepos />
       </section>
-      <section id="pcstats">
-        <PCStats />
-      </section>
-      <section id="laptopstats">
-        <LaptopStats />
+      <section
+        id="machine-stats"
+        className="py-16 lg:py-20 px-4"
+        aria-label="Live machine statistics"
+      >
+        <div className="mx-auto grid max-w-[90rem] grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-6 xl:gap-10">
+          <div id="pcstats" className="min-w-0 scroll-mt-24">
+            <PCStats embedded />
+          </div>
+          <div id="laptopstats" className="min-w-0 scroll-mt-24">
+            <LaptopStats embedded />
+          </div>
+        </div>
       </section>
       <section id="grades">
         <UniversityGrades />

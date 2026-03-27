@@ -173,7 +173,7 @@ const AnimatedNumber = ({ value, colorClass }: AnimatedNumberProps) => {
   );
 };
 
-const STALE_AFTER_SECONDS = 60;
+const STALE_AFTER_SECONDS = 10;
 
 export type StatsTableName = "pc_stats" | "laptop_stats";
 
@@ -188,6 +188,8 @@ export interface MachineStatsProps {
   systemIcon?: "computer" | "laptop";
   /** When true, always show `defaultLabels` (ignore `stats_meta` from the API). */
   hardcodedLabels?: boolean;
+  /** Narrower padding and full width of parent — use inside a multi-column layout. */
+  embedded?: boolean;
 }
 
 const MachineStats = ({
@@ -198,7 +200,14 @@ const MachineStats = ({
   channelName,
   systemIcon = "computer",
   hardcodedLabels = false,
+  embedded = false,
 }: MachineStatsProps) => {
+  const sectionShell = embedded ? "min-w-0" : "py-20 px-4";
+  const innerShell = embedded ? "w-full min-w-0" : "max-w-6xl mx-auto";
+  const headerMb = embedded ? "mb-8" : "mb-12";
+  const titleClass = embedded
+    ? "text-2xl font-bold md:text-3xl glow-text"
+    : "text-3xl md:text-4xl font-bold glow-text";
   const [stats, setStats] = useState<MachineStatsData | null>(null);
   const [initialFetchDone, setInitialFetchDone] = useState(false);
 
@@ -273,9 +282,9 @@ const MachineStats = ({
 
   if (!stats && !initialFetchDone) {
     return (
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">{title}</h2>
+      <section className={sectionShell}>
+        <div className={`${innerShell} text-center`}>
+          <h2 className={`${titleClass} mb-4`}>{title}</h2>
           <p className="text-muted-foreground">Loading…</p>
         </div>
       </section>
@@ -284,9 +293,9 @@ const MachineStats = ({
 
   if (isOffline) {
     return (
-      <section className="py-20 px-4">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mb-10 text-center text-3xl font-bold md:text-4xl glow-text">{title}</h2>
+      <section className={sectionShell}>
+        <div className={innerShell}>
+          <h2 className={`mb-10 text-center ${titleClass}`}>{title}</h2>
           <div
             className="mx-auto max-w-sm animate-fade-in rounded-2xl border border-dashed border-muted-foreground/25 bg-gradient-to-b from-muted/15 to-muted/5 px-8 py-10 text-center shadow-[inset_0_1px_0_0_hsl(var(--border)/0.35)] backdrop-blur-md md:max-w-md md:px-10 md:py-12"
             role="status"
@@ -330,11 +339,11 @@ const MachineStats = ({
   const showBattery = batteryPercent != null || Boolean(batteryStatus);
 
   return (
-    <section className="py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">{title}</h2>
-          <p className="text-muted-foreground">
+    <section className={sectionShell}>
+      <div className={innerShell}>
+        <div className={`text-center ${headerMb}`}>
+          <h2 className={`${titleClass} mb-4`}>{title}</h2>
+          <p className={embedded ? "text-muted-foreground text-sm md:text-base" : "text-muted-foreground"}>
             {subtitle}
             <span className="ml-2">
               <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse-glow" />
@@ -389,7 +398,9 @@ const MachineStats = ({
           </div>
         </div>
 
-        <div className="mx-auto flex max-w-5xl flex-col gap-10">
+        <div
+          className={`mx-auto flex flex-col gap-10 ${embedded ? "max-w-none" : "max-w-5xl"}`}
+        >
           <StatsGroup
             title="System"
             description="CPU, memory, and combined disk capacity"
@@ -454,7 +465,7 @@ const MachineStats = ({
                     <h4 className="font-semibold leading-tight">Storage</h4>
                     <p className="text-xs text-muted-foreground">
                       {hasStorage
-                        ? `${formatStorageGb(storageUsed)} / ${formatStorageGb(storageTotal)} combined`
+                        ? `${formatStorageGb(storageUsed)} / ${formatStorageGb(storageTotal)}`
                         : "All drives combined"}
                     </p>
                   </div>
@@ -483,14 +494,18 @@ const MachineStats = ({
             }
             style={{ animationDelay: "80ms" }}
           >
-            <div className={`grid grid-cols-1 gap-4 ${hasSecondGpu ? "lg:grid-cols-2" : ""}`}>
+            <div
+              className={`grid grid-cols-1 gap-4 ${hasSecondGpu ? "lg:grid-cols-2" : ""}`}
+            >
               <Card className="glass-card group overflow-hidden p-0 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg">
-                <div className="flex items-center gap-3 border-b border-border/40 bg-primary/5 px-5 py-4">
-                  <div className="rounded-lg bg-primary/10 p-2.5">
-                    <Gauge className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-2.5 border-b border-border/40 bg-primary/5 px-4 py-3.5 sm:px-5 sm:py-4">
+                  <div className="shrink-0 rounded-lg bg-primary/10 p-2">
+                    <Gauge className="h-4 w-4 text-primary sm:h-5 sm:w-5" />
                   </div>
-                  <div>
-                    <h4 className="font-semibold">{labels.gpu}</h4>
+                  <div className="min-w-0">
+                    <h4 className="whitespace-nowrap text-sm font-semibold leading-tight sm:text-base">
+                      {labels.gpu}
+                    </h4>
                     <p className="text-xs text-muted-foreground">
                       {hasSecondGpu ? "GPU 1" : "GPU"}
                     </p>
@@ -545,12 +560,14 @@ const MachineStats = ({
 
               {hasSecondGpu ? (
                 <Card className="glass-card group overflow-hidden p-0 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg">
-                  <div className="flex items-center gap-3 border-b border-border/40 bg-primary/5 px-5 py-4">
-                    <div className="rounded-lg bg-primary/10 p-2.5">
-                      <Gauge className="h-5 w-5 text-primary" />
+                  <div className="flex items-center gap-2.5 border-b border-border/40 bg-primary/5 px-4 py-3.5 sm:px-5 sm:py-4">
+                    <div className="shrink-0 rounded-lg bg-primary/10 p-2">
+                      <Gauge className="h-4 w-4 text-primary sm:h-5 sm:w-5" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold">{labels.gpu2}</h4>
+                    <div className="min-w-0">
+                      <h4 className="whitespace-nowrap text-sm font-semibold leading-tight sm:text-base">
+                        {labels.gpu2}
+                      </h4>
                       <p className="text-xs text-muted-foreground">GPU 2</p>
                     </div>
                   </div>

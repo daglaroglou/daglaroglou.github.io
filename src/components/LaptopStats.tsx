@@ -9,7 +9,7 @@ const LAPTOP_DEFAULT_LABELS: StatsMetaLabels = {
   gpu2: "—",
 };
 
-const LaptopStats = () => (
+const LaptopStats = ({ embedded = false }: { embedded?: boolean }) => (
   <MachineStats
     statsTable="laptop_stats"
     title="Live Laptop Stats"
@@ -18,6 +18,7 @@ const LaptopStats = () => (
     channelName="pc-stats-laptop"
     systemIcon="laptop"
     hardcodedLabels
+    embedded={embedded}
   />
 );
 

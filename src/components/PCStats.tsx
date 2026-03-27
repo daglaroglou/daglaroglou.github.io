@@ -9,7 +9,7 @@ const DEFAULT_STATS_LABELS: StatsMetaLabels = {
   gpu2: "NVIDIA RTX 3060",
 };
 
-const PCStats = () => (
+const PCStats = ({ embedded = false }: { embedded?: boolean }) => (
   <MachineStats
     statsTable="pc_stats"
     title="Live PC Stats"
@@ -17,6 +17,7 @@ const PCStats = () => (
     defaultLabels={DEFAULT_STATS_LABELS}
     channelName="pc-stats-desktop"
     systemIcon="computer"
+    embedded={embedded}
   />
 );
 

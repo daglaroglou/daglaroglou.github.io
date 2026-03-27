@@ -20,8 +20,12 @@ export type Database = {
           created_at: string
           gpu_temp: number | null
           gpu_usage: number | null
+          gpu2_temp: number | null
+          gpu2_usage: number | null
           id: string
           ram_usage: number
+          storage_total_gb: number | null
+          storage_used_gb: number | null
           timestamp: string
         }
         Insert: {
@@ -29,8 +33,12 @@ export type Database = {
           created_at?: string
           gpu_temp?: number | null
           gpu_usage?: number | null
+          gpu2_temp?: number | null
+          gpu2_usage?: number | null
           id?: string
           ram_usage: number
+          storage_total_gb?: number | null
+          storage_used_gb?: number | null
           timestamp?: string
         }
         Update: {
@@ -38,8 +46,12 @@ export type Database = {
           created_at?: string
           gpu_temp?: number | null
           gpu_usage?: number | null
+          gpu2_temp?: number | null
+          gpu2_usage?: number | null
           id?: string
           ram_usage?: number
+          storage_total_gb?: number | null
+          storage_used_gb?: number | null
           timestamp?: string
         }
         Relationships: []

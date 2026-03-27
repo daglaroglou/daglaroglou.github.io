@@ -33,3 +33,6 @@ lerna-debug.log*
 
 # Misc
 .cache
+
+# Supabase CLI (linked project metadata; may include connection hints)
+.supabase

@@ -17,9 +17,27 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { cpu_usage, ram_usage, gpu_usage, gpu_temp } = await req.json();
+    const {
+      cpu_usage,
+      ram_usage,
+      gpu_usage,
+      gpu_temp,
+      gpu2_usage,
+      gpu2_temp,
+      storage_used_gb,
+      storage_total_gb,
+    } = await req.json();
 
-    console.log('Received PC stats:', { cpu_usage, ram_usage, gpu_usage, gpu_temp });
+    console.log('Received PC stats:', {
+      cpu_usage,
+      ram_usage,
+      gpu_usage,
+      gpu_temp,
+      gpu2_usage,
+      gpu2_temp,
+      storage_used_gb,
+      storage_total_gb,
+    });
 
     // Validate input
     if (typeof cpu_usage !== 'number' || typeof ram_usage !== 'number') {
@@ -36,8 +54,12 @@ serve(async (req) => {
         {
           cpu_usage,
           ram_usage,
-          gpu_usage: gpu_usage || null,
-          gpu_temp: gpu_temp || null,
+          gpu_usage: gpu_usage ?? null,
+          gpu_temp: gpu_temp ?? null,
+          gpu2_usage: gpu2_usage ?? null,
+          gpu2_temp: gpu2_temp ?? null,
+          storage_used_gb: storage_used_gb ?? null,
+          storage_total_gb: storage_total_gb ?? null,
         }
       ])
       .select()

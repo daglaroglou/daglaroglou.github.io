@@ -1,1 +1,2 @@
-project_id = "beczcddnwxgbnnssqabt"
+# Remote project ref (Settings → General → Reference ID). Used after `supabase link`.
+project_id = "kyqvzgqxjnxvezwdvjpn"

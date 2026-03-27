@@ -33,7 +33,7 @@ const GitHubRepos = () => {
     };
 
     fetchRepos();
-    const interval = setInterval(fetchRepos, 60000); // Update every minute
+    const interval = setInterval(fetchRepos, 600000); // Update every 10 minutes
     return () => clearInterval(interval);
   }, []);
 

@@ -58,7 +58,7 @@ def login():
     if "login" in resp.url.lower():
         raise Exception("Login failed. Check credentials.")
 
-    print("[1/12] Logged in successfully")
+    print("[1/4] Logged in successfully")
     return session
 
 
@@ -79,11 +79,11 @@ def get_session_cookie(session):
 
 session = login()
 csrf = get_csrf(session)
-print("[2/12] CSRF token fetched")
+print("[2/4] CSRF token fetched")
 
 session_id = get_session_cookie(session)
 if session_id:
-    print("[3/12] JSESSIONID fetched")
+    print("[3/4] JSESSIONID fetched")
 else:
     print("[-] JSESSIONID cookie not found!")
 
@@ -103,7 +103,7 @@ for student_profile in r["studentProfiles"]:
         department = student_profile["departmentTitle"]
         xProfile = student_profile["id"]
 
-print("[4/12] Student profile fetched")
+print("[4/4] Student profile fetched")
 
 headers["X-Profile"] = str(xProfile)
 

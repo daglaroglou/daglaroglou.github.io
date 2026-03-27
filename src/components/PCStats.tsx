@@ -1,6 +1,14 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Card } from "@/components/ui/card";
-import { Cpu, MemoryStick, Gauge, HardDrive } from "lucide-react";
+import {
+  Cpu,
+  MemoryStick,
+  Gauge,
+  HardDrive,
+  Monitor,
+  Computer,
+  WifiOff,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface PCStatsData {
@@ -121,30 +129,37 @@ const AnimatedNumber = ({ value, colorClass }: AnimatedNumberProps) => {
   );
 };
 
+const STALE_AFTER_SECONDS = 60;
+
 const PCStats = () => {
   const [stats, setStats] = useState<PCStatsData | null>(null);
+  const [initialFetchDone, setInitialFetchDone] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
       console.log("Fetching PC stats...");
-      const { data, error } = await supabase
-        .from("pc_stats")
-        .select("*")
-        .order("timestamp", { ascending: false })
-        .order("id", { ascending: false })
-        .limit(1)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from("pc_stats")
+          .select("*")
+          .order("timestamp", { ascending: false })
+          .order("id", { ascending: false })
+          .limit(1)
+          .single();
 
-      if (error) {
-        console.error("Error fetching stats:", error);
-      }
-      
-      if (data) {
-        const normalized = normalizePcStatsRow(data as Record<string, unknown>);
-        console.log("Received stats:", normalized);
-        setStats(normalized);
-      } else {
-        console.log("No data received");
+        if (error) {
+          console.error("Error fetching stats:", error);
+        }
+
+        if (data) {
+          const normalized = normalizePcStatsRow(data as Record<string, unknown>);
+          console.log("Received stats:", normalized);
+          setStats(normalized);
+        } else {
+          console.log("No data received");
+        }
+      } finally {
+        setInitialFetchDone(true);
       }
     };
 
@@ -185,43 +200,61 @@ const PCStats = () => {
     return "text-red-500";
   };
 
-  if (!stats) {
+  const timeDiff = stats
+    ? Math.floor((Date.now() - new Date(stats.timestamp).getTime()) / 1000)
+    : 0;
+  const isStale = stats ? timeDiff > STALE_AFTER_SECONDS : false;
+  const isOffline = !stats || isStale;
+
+  if (!stats && !initialFetchDone) {
     return (
       <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center glow-text">
-            Live PC Stats
-          </h2>
-          <p className="text-muted-foreground text-center mb-8">
-            Waiting for data...
-          </p>
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 glow-text">Live PC Stats</h2>
+          <p className="text-muted-foreground">Loading…</p>
         </div>
       </section>
     );
   }
 
-  const timeDiff = Math.floor((Date.now() - new Date(stats.timestamp).getTime()) / 1000);
-  const isStale = timeDiff > 60;
+  if (isOffline) {
+    return (
+      <section className="py-20 px-4">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-10 text-center text-3xl font-bold md:text-4xl glow-text">
+            Live PC Stats
+          </h2>
+          <div
+            className="mx-auto max-w-sm animate-fade-in rounded-2xl border border-dashed border-muted-foreground/25 bg-gradient-to-b from-muted/15 to-muted/5 px-8 py-10 text-center shadow-[inset_0_1px_0_0_hsl(var(--border)/0.35)] backdrop-blur-md md:max-w-md md:px-10 md:py-12"
+            role="status"
+            aria-live="polite"
+          >
+            <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-border/60 bg-muted/25 text-muted-foreground shadow-sm">
+              <WifiOff className="h-7 w-7" strokeWidth={1.5} aria-hidden />
+            </div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted-foreground/90">
+              Status
+            </p>
+            <div className="mt-3 flex items-center justify-center gap-2.5">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-muted-foreground/35 opacity-75 motion-safe:animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-muted-foreground/55" />
+              </span>
+              <p className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">
+                Offline
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const storageUsed = stats.storage_used_gb ?? 0;
   const storageTotal = stats.storage_total_gb ?? 0;
   const storagePercent =
     storageTotal > 0 ? Math.min(100, (storageUsed / storageTotal) * 100) : 0;
   const hasStorage = storageTotal > 0;
-
-  const formatTimeDiff = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-
-    if (hours > 0) {
-      return `${hours}h ${minutes}m ${secs}s`;
-    } else if (minutes > 0) {
-      return `${minutes}m ${secs}s`;
-    } else {
-      return `${secs}s`;
-    }
-  };
 
   return (
     <section className="py-20 px-4">
@@ -232,13 +265,39 @@ const PCStats = () => {
           </h2>
           <p className="text-muted-foreground">
             Real-time usage from my rig
-            {!isStale && (
-              <span className="ml-2">
-                <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse-glow" />
-                <span className="ml-2">Live</span>
-              </span>
-            )}
+            <span className="ml-2">
+              <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse-glow" />
+              <span className="ml-2">Live</span>
+            </span>
           </p>
+          <div className="mx-auto mt-5 flex max-w-xl flex-wrap items-stretch justify-center gap-2.5 sm:gap-3">
+            <div className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Computer className="h-4 w-4" aria-hidden />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium uppercase tracking-widest text-primary/70">
+                  OS
+                </p>
+                <p className="text-sm font-semibold leading-snug text-foreground">
+                  Windows 11 IoT LTSC
+                </p>
+              </div>
+            </div>
+            <div className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Monitor className="h-4 w-4" aria-hidden />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+                  Display
+                </p>
+                <p className="text-sm font-semibold leading-snug text-foreground">
+                  {'MSI 24" · 144 Hz'}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="mx-auto flex max-w-5xl flex-col gap-10">
@@ -430,12 +489,6 @@ const PCStats = () => {
             </div>
           </StatsGroup>
         </div>
-
-        {isStale && (
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            Last updated {formatTimeDiff(timeDiff)} ago
-          </p>
-        )}
       </div>
     </section>
   );

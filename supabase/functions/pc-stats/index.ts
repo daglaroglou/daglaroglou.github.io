@@ -26,6 +26,7 @@ serve(async (req) => {
       gpu2_temp,
       storage_used_gb,
       storage_total_gb,
+      stats_meta,
     } = await req.json();
 
     console.log('Received PC stats:', {
@@ -37,6 +38,7 @@ serve(async (req) => {
       gpu2_temp,
       storage_used_gb,
       storage_total_gb,
+      stats_meta,
     });
 
     // Validate input
@@ -60,6 +62,7 @@ serve(async (req) => {
           gpu2_temp: gpu2_temp ?? null,
           storage_used_gb: storage_used_gb ?? null,
           storage_total_gb: storage_total_gb ?? null,
+          stats_meta: stats_meta ?? null,
         }
       ])
       .select()

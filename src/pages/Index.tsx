@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Hero from "@/components/Hero";
 import GitHubRepos from "@/components/GitHubRepos";
 import PCStats from "@/components/PCStats";
+import LaptopStats from "@/components/LaptopStats";
 import UniversityGrades from "@/components/UniversityGrades";
 import BlogPreview from "@/components/BlogPreview";
 import Donation from "@/components/Donation";
@@ -31,6 +32,9 @@ const Index = () => {
       </section>
       <section id="pcstats">
         <PCStats />
+      </section>
+      <section id="laptopstats">
+        <LaptopStats />
       </section>
       <section id="grades">
         <UniversityGrades />

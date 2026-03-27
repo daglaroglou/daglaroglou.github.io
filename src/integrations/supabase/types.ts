@@ -18,12 +18,61 @@ export type Database = {
         Row: {
           cpu_usage: number
           created_at: string
+          device: string
           gpu_temp: number | null
           gpu_usage: number | null
           gpu2_temp: number | null
           gpu2_usage: number | null
           id: string
           ram_usage: number
+          stats_meta: Json | null
+          storage_total_gb: number | null
+          storage_used_gb: number | null
+          timestamp: string
+        }
+        Insert: {
+          cpu_usage: number
+          created_at?: string
+          device?: string
+          gpu_temp?: number | null
+          gpu_usage?: number | null
+          gpu2_temp?: number | null
+          gpu2_usage?: number | null
+          id?: string
+          ram_usage: number
+          stats_meta?: Json | null
+          storage_total_gb?: number | null
+          storage_used_gb?: number | null
+          timestamp?: string
+        }
+        Update: {
+          cpu_usage?: number
+          created_at?: string
+          device?: string
+          gpu_temp?: number | null
+          gpu_usage?: number | null
+          gpu2_temp?: number | null
+          gpu2_usage?: number | null
+          id?: string
+          ram_usage?: number
+          stats_meta?: Json | null
+          storage_total_gb?: number | null
+          storage_used_gb?: number | null
+          timestamp?: string
+        }
+        Relationships: []
+      }
+      laptop_stats: {
+        Row: {
+          cpu_usage: number
+          created_at: string
+          gpu_temp: number | null
+          gpu_usage: number | null
+          gpu2_temp: number | null
+          gpu2_usage: number | null
+          id: string
+          ram_usage: number
+          stats_meta: Json | null
           storage_total_gb: number | null
           storage_used_gb: number | null
           timestamp: string
@@ -37,6 +86,7 @@ export type Database = {
           gpu2_usage?: number | null
           id?: string
           ram_usage: number
+          stats_meta?: Json | null
           storage_total_gb?: number | null
           storage_used_gb?: number | null
           timestamp?: string
@@ -50,6 +100,7 @@ export type Database = {
           gpu2_usage?: number | null
           id?: string
           ram_usage?: number
+          stats_meta?: Json | null
           storage_total_gb?: number | null
           storage_used_gb?: number | null
           timestamp?: string

@@ -96,6 +96,16 @@ function formatStorageGb(gb: number): string {
   return `${gb.toFixed(1)} GB`;
 }
 
+function formatStaleAge(seconds: number): string {
+  if (seconds < 60) return `${seconds}s ago`;
+  if (seconds < 3600) {
+    const m = Math.floor(seconds / 60);
+    return `${m}m ago`;
+  }
+  const h = Math.floor(seconds / 3600);
+  return `${h}h ago`;
+}
+
 function StatsGroup({
   title,
   description,
@@ -292,28 +302,71 @@ const MachineStats = ({
   }
 
   if (isOffline) {
+    const isStaleOffline = Boolean(stats && isStale);
+    const offlineSubtext = isStaleOffline
+      ? "The live feed may have stopped."
+      : "Live metrics will show here when this machine is reporting.";
+
     return (
       <section className={sectionShell}>
         <div className={innerShell}>
           <h2 className={`mb-10 text-center ${titleClass}`}>{title}</h2>
           <div
-            className="mx-auto max-w-sm animate-fade-in rounded-2xl border border-dashed border-muted-foreground/25 bg-gradient-to-b from-muted/15 to-muted/5 px-8 py-10 text-center shadow-[inset_0_1px_0_0_hsl(var(--border)/0.35)] backdrop-blur-md md:max-w-md md:px-10 md:py-12"
+            className="glass-card relative mx-auto max-w-sm animate-fade-in overflow-hidden rounded-3xl border border-border/45 text-center shadow-lg md:max-w-md"
             role="status"
             aria-live="polite"
+            aria-label={
+              isStaleOffline
+                ? `Offline. Last update ${formatStaleAge(timeDiff)}. ${offlineSubtext}`
+                : `Offline. ${offlineSubtext}`
+            }
           >
-            <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-border/60 bg-muted/25 text-muted-foreground shadow-sm">
-              <WifiOff className="h-7 w-7" strokeWidth={1.5} aria-hidden />
-            </div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted-foreground/90">
-              Status
-            </p>
-            <div className="mt-3 flex items-center justify-center gap-2.5">
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-muted-foreground/35 opacity-75 motion-safe:animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-muted-foreground/55" />
-              </span>
-              <p className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">
-                Offline
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.11]"
+              style={{
+                backgroundImage: `repeating-linear-gradient(
+                  -40deg,
+                  transparent,
+                  transparent 5px,
+                  hsl(var(--foreground) / 0.12) 5px,
+                  hsl(var(--foreground) / 0.12) 6px
+                )`,
+              }}
+              aria-hidden
+            />
+            <div className="relative px-8 py-10 md:px-12 md:py-12">
+              <div className="relative mx-auto mb-7 flex h-[5.25rem] w-[5.25rem] items-center justify-center">
+                <div
+                  className="absolute h-[5.25rem] w-[5.25rem] rounded-full border border-dashed border-muted-foreground/30 motion-safe:animate-[spin_48s_linear_infinite]"
+                  aria-hidden
+                />
+                <div
+                  className="absolute h-[4.25rem] w-[4.25rem] rounded-full border border-muted-foreground/15"
+                  aria-hidden
+                />
+                <div className="relative flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full border border-border/70 bg-muted/25 text-muted-foreground shadow-inner">
+                  <WifiOff className="h-6 w-6" strokeWidth={1.5} aria-hidden />
+                </div>
+              </div>
+
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">Status</p>
+              <p className="mt-2 text-2xl font-bold tracking-tight text-foreground md:text-3xl">Offline</p>
+
+              {isStaleOffline ? (
+                <div className="mt-6 border-y border-border/50 py-5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                    Last update
+                  </p>
+                  <p className="mt-2 text-3xl font-bold tabular-nums tracking-tight text-foreground md:text-4xl">
+                    {formatStaleAge(timeDiff)}
+                  </p>
+                </div>
+              ) : null}
+
+              <p
+                className={`text-pretty text-sm leading-relaxed text-muted-foreground ${isStaleOffline ? "mt-5" : "mt-4"}`}
+              >
+                {offlineSubtext}
               </p>
             </div>
           </div>

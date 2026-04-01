@@ -96,14 +96,33 @@ function formatStorageGb(gb: number): string {
   return `${gb.toFixed(1)} GB`;
 }
 
+const SEC_PER_MINUTE = 60;
+const SEC_PER_HOUR = 3600;
+const SEC_PER_DAY = 86400;
+const SEC_PER_WEEK = 604800;
+/** 365 days — calendar years are not modeled; good enough for “last seen” copy. */
+const SEC_PER_YEAR = 31536000;
+
 function formatStaleAge(seconds: number): string {
-  if (seconds < 60) return `${seconds}s ago`;
-  if (seconds < 3600) {
-    const m = Math.floor(seconds / 60);
+  if (seconds < SEC_PER_MINUTE) return `${seconds}s ago`;
+  if (seconds < SEC_PER_HOUR) {
+    const m = Math.floor(seconds / SEC_PER_MINUTE);
     return `${m}m ago`;
   }
-  const h = Math.floor(seconds / 3600);
-  return `${h}h ago`;
+  if (seconds < SEC_PER_DAY) {
+    const h = Math.floor(seconds / SEC_PER_HOUR);
+    return `${h}h ago`;
+  }
+  if (seconds < SEC_PER_WEEK) {
+    const d = Math.floor(seconds / SEC_PER_DAY);
+    return `${d}d ago`;
+  }
+  if (seconds < SEC_PER_YEAR) {
+    const w = Math.floor(seconds / SEC_PER_WEEK);
+    return `${w}w ago`;
+  }
+  const y = Math.floor(seconds / SEC_PER_YEAR);
+  return `${y}y ago`;
 }
 
 function StatsGroup({

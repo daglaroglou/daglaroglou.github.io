@@ -1,4 +1,4 @@
-import { Github, Bitcoin, Heart, DollarSign } from "lucide-react";
+import { GitBranch, Bitcoin, Heart, DollarSign } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 
@@ -7,7 +7,7 @@ const Donation = () => {
   const donationMethods = [
     {
       name: "GitHub Sponsors",
-      icon: Github,
+      icon: GitBranch,
       description: "Sponsor me on GitHub",
       link: "https://github.com/sponsors/daglaroglou",
       color: "text-purple-500",

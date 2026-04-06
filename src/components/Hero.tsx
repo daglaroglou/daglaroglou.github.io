@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { Github, Mail, Gamepad2, Music, Code, Download } from "lucide-react";
+import { GitBranch, Mail, Gamepad2, Music, Code, Download } from "lucide-react";
 import CanvasParticles from "@/components/CanvasParticles";
 import WakaTimeStats from "./WakaTimeStats";
 
@@ -436,7 +436,7 @@ const Hero = () => {
               className="glass-card p-3 rounded-full hover-lift transition-all hover:scale-110"
               aria-label="GitHub"
             >
-              <Github className="w-5 h-5" />
+              <GitBranch className="w-5 h-5" />
             </a>
             <a 
               href="mailto:contact@dag.is-a.dev"

@@ -426,14 +426,14 @@ const MachineStats = ({
           <div
             className={`mx-auto mt-5 flex max-w-xl items-stretch gap-2.5 sm:gap-3 ${
               isLaptop
-                ? "flex-nowrap justify-start overflow-x-auto"
+                ? "flex-nowrap justify-center"
                 : "flex-wrap justify-center"
             }`}
           >
             <div
               className={`flex items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm ${
                 isLaptop
-                  ? "min-w-fit shrink-0"
+                  ? "min-w-0 flex-1 basis-0"
                   : "min-w-[min(100%,14rem)] flex-1 sm:min-w-0 sm:flex-initial"
               }`}
             >
@@ -444,11 +444,7 @@ const MachineStats = ({
                 <p className="text-[10px] font-medium uppercase tracking-widest text-primary/70">
                   OS
                 </p>
-                <p
-                  className={`text-sm font-semibold leading-snug text-foreground ${
-                    isLaptop ? "whitespace-nowrap" : ""
-                  }`}
-                >
+                <p className={`text-sm font-semibold leading-snug text-foreground ${isLaptop ? "truncate" : ""}`}>
                   {labels.os}
                 </p>
               </div>
@@ -456,7 +452,7 @@ const MachineStats = ({
             <div
               className={`flex items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm ${
                 isLaptop
-                  ? "min-w-fit shrink-0"
+                  ? "min-w-0 flex-1 basis-0"
                   : "min-w-[min(100%,14rem)] flex-1 sm:min-w-0 sm:flex-initial"
               }`}
             >
@@ -467,11 +463,7 @@ const MachineStats = ({
                 <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
                   Display
                 </p>
-                <p
-                  className={`text-sm font-semibold leading-snug text-foreground ${
-                    isLaptop ? "whitespace-nowrap" : ""
-                  }`}
-                >
+                <p className={`text-sm font-semibold leading-snug text-foreground ${isLaptop ? "truncate" : ""}`}>
                   {labels.display}
                 </p>
               </div>
@@ -480,7 +472,7 @@ const MachineStats = ({
               <div
                 className={`flex items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm ${
                   isLaptop
-                    ? "min-w-fit shrink-0"
+                    ? "min-w-0 flex-1 basis-0"
                     : "min-w-[min(100%,14rem)] flex-1 sm:min-w-0 sm:flex-initial"
                 }`}
               >
@@ -491,18 +483,10 @@ const MachineStats = ({
                   <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
                     Battery
                   </p>
-                  <p
-                    className={`text-sm font-semibold leading-snug text-foreground ${
-                      isLaptop ? "whitespace-nowrap" : ""
-                    }`}
-                  >
+                  <p className={`text-sm font-semibold leading-snug text-foreground ${isLaptop ? "truncate" : ""}`}>
                     {batteryPercent != null ? `${batteryPercent.toFixed(0)}%` : "—"}
                     {batteryStatus ? (
-                      <span
-                        className={`ml-1.5 font-normal text-muted-foreground ${
-                          isLaptop ? "whitespace-nowrap" : ""
-                        }`}
-                      >
+                      <span className={`ml-1.5 font-normal text-muted-foreground ${isLaptop ? "truncate" : ""}`}>
                         · {batteryStatus}
                       </span>
                     ) : null}

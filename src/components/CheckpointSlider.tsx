@@ -11,8 +11,7 @@ interface Checkpoint {
 const checkpoints: Checkpoint[] = [
   { id: "hero", label: "Home", icon: "🏠" },
   { id: "github", label: "Projects", icon: "📂" },
-  { id: "pcstats", label: "PC Stats", icon: "🖥️" },
-  { id: "laptopstats", label: "Laptop", icon: "💻" },
+  { id: "pcstats", label: "Rig stats", icon: "🖥️" },
   { id: "grades", label: "Grades", icon: "🎓" },
   { id: "blog", label: "Blog", icon: "📝" },
   { id: "donation", label: "Support", icon: "❤️" },

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { GitBranch, GitCommitHorizontal } from "lucide-react";
 
 const { commitShort, commitFull, builtAt, repository } = __BUILD_INFO__;
@@ -14,7 +15,59 @@ const builtDisplay = Number.isNaN(builtDate.getTime())
       timeStyle: "short",
     });
 
+type BuildStatus = "unknown" | "running";
+
 const SiteFooter = () => {
+  const [buildStatus, setBuildStatus] = useState<BuildStatus>("unknown");
+
+  useEffect(() => {
+    if (!commitFull || commitFull.length < 7) {
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const fetchBuildStatus = async () => {
+      try {
+        const response = await fetch(
+          `https://api.github.com/repos/${repository}/actions/runs?head_sha=${commitFull}&per_page=10`,
+          {
+            signal: controller.signal,
+            headers: {
+              Accept: "application/vnd.github+json",
+            },
+          },
+        );
+
+        if (!response.ok) {
+          setBuildStatus("unknown");
+          return;
+        }
+
+        const data = (await response.json()) as {
+          workflow_runs?: Array<{ status?: string }>;
+        };
+        const hasRunningBuild = data.workflow_runs?.some(
+          (run) => run.status === "queued" || run.status === "in_progress",
+        );
+
+        setBuildStatus(hasRunningBuild ? "running" : "unknown");
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") {
+          setBuildStatus("unknown");
+        }
+      }
+    };
+
+    fetchBuildStatus();
+    const interval = window.setInterval(fetchBuildStatus, 60_000);
+
+    return () => {
+      controller.abort();
+      window.clearInterval(interval);
+    };
+  }, [commitFull, repository]);
+
   return (
     <footer
       className="relative z-10 border-t border-border/40 bg-background/80 backdrop-blur-sm mt-auto"
@@ -41,6 +94,52 @@ const SiteFooter = () => {
             ·
           </span>
           <span>Built {builtDisplay}</span>
+          {buildStatus === "running" && (
+            <>
+              <span aria-hidden className="text-border">
+                ·
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <svg
+                  viewBox="0 0 16 16"
+                  width="14"
+                  height="14"
+                  className="shrink-0"
+                  aria-hidden
+                >
+                  <circle cx="8" cy="8" r="3.5" fill="#dbab09" />
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6.5"
+                    fill="none"
+                    stroke="#9e6a03"
+                    strokeWidth="1.5"
+                  />
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6.5"
+                    fill="none"
+                    stroke="#dbab09"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeDasharray="10.2 30.6"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 8 8"
+                      to="360 8 8"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                </svg>
+                <span>Building...</span>
+              </span>
+            </>
+          )}
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <a

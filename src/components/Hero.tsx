@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Mail, Gamepad2, Music, Code, Download } from "lucide-react";
 import CanvasParticles from "@/components/CanvasParticles";
+import { GitHubMark } from "@/components/icons/GitHubMark";
 import WakaTimeStats from "./WakaTimeStats";
 
 interface LanyardData {
@@ -436,9 +437,7 @@ const Hero = () => {
               className="glass-card p-3 rounded-full hover-lift transition-all hover:scale-110"
               aria-label="GitHub"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.205 11.385.6.111.82-.258.82-.577 0-.285-.01-1.04-.016-2.042-3.338.724-4.042-1.609-4.042-1.609-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.082-.729.082-.729 1.205.085 1.839 1.237 1.839 1.237 1.07 1.834 2.809 1.304 3.495.998.108-.775.418-1.304.762-1.604-2.665-.305-5.467-1.333-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.304-.535-1.524.117-3.176 0 0 1.008-.323 3.301 1.23a11.495 11.495 0 0 1 3.005-.404c1.02.004 2.047.138 3.005.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.872.119 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.371.814 1.103.814 2.222 0 1.604-.015 2.898-.015 3.293 0 .321.216.694.825.576C20.565 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-              </svg>
+              <GitHubMark className="w-5 h-5" />
             </a>
             <a 
               href="mailto:contact@dag.is-a.dev"

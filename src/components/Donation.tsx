@@ -1,30 +1,69 @@
-import { GitBranch, Bitcoin, Heart, DollarSign } from "lucide-react";
+import { Bitcoin, Heart, type LucideIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { useState } from "react";
+import { GitHubMark } from "@/components/icons/GitHubMark";
+import { useState, type ComponentType } from "react";
+
+/** PayPal mark (Simple Icons geometry); brand blues per PayPal guidelines. */
+function PayPalMark({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="#003087"
+        d="M7.016 19.198h-4.2a.562.562 0 0 1-.555-.65L5.093.584A.692.692 0 0 1 5.776 0h7.222c3.417 0 5.904 2.488 5.846 5.5-.006.25-.027.5-.066.747A6.794 6.794 0 0 1 12.071 12H8.743a.69.69 0 0 0-.682.583l-.325 2.056-.013.083-.692 4.39-.015.087z"
+      />
+      <path
+        fill="#009CDE"
+        d="M19.79 6.142c-.01.087-.01.175-.023.261a7.76 7.76 0 0 1-7.695 6.598H9.007l-.283 1.795-.013.083-.692 4.39-.134.843-.014.088H6.86l-.497 3.15a.562.562 0 0 0 .555.65h3.612c.34 0 .63-.249.683-.585l.952-6.031a.692.692 0 0 1 .683-.584h2.126a6.793 6.793 0 0 0 6.707-5.752c.306-1.95-.466-3.744-1.89-4.906z"
+      />
+    </svg>
+  );
+}
+
+/** Revolut mark (Simple Icons geometry). */
+function RevolutMark({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="currentColor"
+        d="M20.9133 6.9566C20.9133 3.1208 17.7898 0 13.9503 0H2.424v3.8605h10.9782c1.7376 0 3.177 1.3651 3.2087 3.043.016.84-.2994 1.633-.8878 2.2324-.5886.5998-1.375.9303-2.2144.9303H9.2322a.2756.2756 0 0 0-.2755.2752v3.431c0 .0585.018.1142.052.1612L16.2646 24h5.3114l-7.2727-10.094c3.6625-.1838 6.61-3.2612 6.61-6.9494zM6.8943 5.9229H2.424V24h4.4704z"
+      />
+    </svg>
+  );
+}
+
+type DonationIcon = ComponentType<{ className?: string }> | LucideIcon;
+
+type DonationMethod = {
+  name: string;
+  icon: DonationIcon;
+  description: string;
+  link: string;
+  color: string;
+};
 
 const Donation = () => {
   const [isHighlighted, setIsHighlighted] = useState(false);
-  const donationMethods = [
+  const donationMethods: DonationMethod[] = [
     {
       name: "GitHub Sponsors",
-      icon: GitBranch,
+      icon: GitHubMark,
       description: "Sponsor me on GitHub",
       link: "https://github.com/sponsors/daglaroglou",
       color: "text-purple-500",
     },
     {
       name: "PayPal",
-      icon: DollarSign,
+      icon: PayPalMark,
       description: "One-time donation via PayPal",
       link: "https://paypal.me/daglaroglou",
-      color: "text-primary",
+      color: "",
     },
     {
       name: "Revolut",
-      icon: Heart,
+      icon: RevolutMark,
       description: "Send via Revolut",
       link: "https://revolut.me/daglaroglouc",
-      color: "text-cyan-500",
+      color: "text-foreground",
     },
     {
       name: "Crypto",
@@ -95,7 +134,9 @@ const Donation = () => {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-start gap-4">
-                    <div className={`p-3 bg-primary/10 rounded-lg transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-110 ${method.color}`}>
+                    <div
+                      className={`p-3 bg-primary/10 rounded-lg transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-110${method.color ? ` ${method.color}` : ""}`}
+                    >
                       <Icon className="w-6 h-6" />
                     </div>
                     <div className="flex-1">

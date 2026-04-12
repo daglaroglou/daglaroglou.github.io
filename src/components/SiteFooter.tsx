@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { GitBranch, GitCommitHorizontal } from "lucide-react";
+import { GitCommitHorizontal } from "lucide-react";
+import { GitHubMark } from "@/components/icons/GitHubMark";
 
 const { commitShort, commitFull, builtAt, repository } = __BUILD_INFO__;
 
@@ -148,7 +149,7 @@ const SiteFooter = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
           >
-            <GitBranch className="w-3.5 h-3.5 shrink-0" aria-hidden />
+            <GitHubMark className="w-3.5 h-3.5 shrink-0 opacity-90" />
             Source
           </a>
           <span className="hidden sm:inline text-border" aria-hidden>

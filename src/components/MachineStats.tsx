@@ -241,7 +241,6 @@ const MachineStats = ({
   const [initialFetchDone, setInitialFetchDone] = useState(false);
 
   const SystemIcon: LucideIcon = systemIcon === "laptop" ? Laptop : Computer;
-  const isLaptop = systemIcon === "laptop";
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -423,19 +422,9 @@ const MachineStats = ({
               <span className="ml-2">Live</span>
             </span>
           </p>
-          <div
-            className={`mx-auto mt-5 flex max-w-xl items-stretch gap-2.5 sm:gap-3 ${
-              isLaptop
-                ? "flex-nowrap justify-center"
-                : "flex-wrap justify-center"
-            }`}
-          >
+          <div className="mx-auto mt-5 flex max-w-xl flex-wrap items-stretch justify-center gap-2.5 sm:gap-3">
             <div
-              className={`flex items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm ${
-                isLaptop
-                  ? "min-w-0 flex-1 basis-0"
-                  : "min-w-[min(100%,14rem)] flex-1 sm:min-w-0 sm:flex-initial"
-              }`}
+              className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <SystemIcon className="h-4 w-4" aria-hidden />
@@ -444,17 +433,13 @@ const MachineStats = ({
                 <p className="text-[10px] font-medium uppercase tracking-widest text-primary/70">
                   OS
                 </p>
-                <p className={`text-sm font-semibold leading-snug text-foreground ${isLaptop ? "truncate" : ""}`}>
+                <p className="text-sm font-semibold leading-snug text-foreground">
                   {labels.os}
                 </p>
               </div>
             </div>
             <div
-              className={`flex items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm ${
-                isLaptop
-                  ? "min-w-0 flex-1 basis-0"
-                  : "min-w-[min(100%,14rem)] flex-1 sm:min-w-0 sm:flex-initial"
-              }`}
+              className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial"
             >
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <Monitor className="h-4 w-4" aria-hidden />
@@ -463,18 +448,14 @@ const MachineStats = ({
                 <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
                   Display
                 </p>
-                <p className={`text-sm font-semibold leading-snug text-foreground ${isLaptop ? "truncate" : ""}`}>
+                <p className="text-sm font-semibold leading-snug text-foreground">
                   {labels.display}
                 </p>
               </div>
             </div>
             {showBattery ? (
               <div
-                className={`flex items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm ${
-                  isLaptop
-                    ? "min-w-0 flex-1 basis-0"
-                    : "min-w-[min(100%,14rem)] flex-1 sm:min-w-0 sm:flex-initial"
-                }`}
+                className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial"
               >
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Battery className="h-4 w-4" aria-hidden />
@@ -483,10 +464,10 @@ const MachineStats = ({
                   <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
                     Battery
                   </p>
-                  <p className={`text-sm font-semibold leading-snug text-foreground ${isLaptop ? "truncate" : ""}`}>
+                  <p className="text-sm font-semibold leading-snug text-foreground">
                     {batteryPercent != null ? `${batteryPercent.toFixed(0)}%` : "—"}
                     {batteryStatus ? (
-                      <span className={`ml-1.5 font-normal text-muted-foreground ${isLaptop ? "truncate" : ""}`}>
+                      <span className="ml-1.5 font-normal text-muted-foreground">
                         · {batteryStatus}
                       </span>
                     ) : null}

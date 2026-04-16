@@ -33,6 +33,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        env:
+          # Keep install behavior aligned with Dependabot CI when merged PRs use
+          # lockfiles that need relaxed peer resolution.
+          NPM_CONFIG_LEGACY_PEER_DEPS: true
 
       - name: Build with Vite
         env:

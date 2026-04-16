@@ -10,9 +10,16 @@ on:
       - reopened
       - ready_for_review
 
+# One run per PR; supersede older runs when the branch updates.
+concurrency:
+  group: dependabot-ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   dependabot-ci:
-    if: github.actor == 'dependabot[bot]' && startsWith(github.head_ref, 'dependabot/npm_and_yarn/')
+    if: >-
+      github.actor == 'dependabot[bot]' &&
+      startsWith(github.head_ref, 'dependabot/npm_and_yarn/')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,8 +35,14 @@ jobs:
           node-version: "22"
           cache: "npm"
 
+      # Dependabot grouped updates can produce lockfiles that npm's strict peer
+      # resolver rejects (e.g. eslint major vs plugin peer ranges). Legacy peer
+      # resolution matches typical local `npm install` behavior and avoids false
+      # CI failures on otherwise installable trees.
       - name: Install dependencies
         run: npm ci
+        env:
+          NPM_CONFIG_LEGACY_PEER_DEPS: true
 
       - name: Lint
         run: npm run lint --if-present
@@ -38,8 +51,28 @@ jobs:
         run: npm run build --if-present
 
   enable-automerge:
-    if: github.actor == 'dependabot[bot]' && startsWith(github.head_ref, 'dependabot/npm_and_yarn/')
+    if: >-
+      github.actor == 'dependabot[bot]' &&
+      startsWith(github.head_ref, 'dependabot/npm_and_yarn/')
     needs: dependabot-ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Enable auto-merge
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: squash
+
+  # GitHub Actions dependency PRs do not touch package.json; skip npm CI but
+  # still enable auto-merge when branch protection allows it.
+  enable-automerge-github-actions:
+    if: >-
+      github.actor == 'dependabot[bot]' &&
+      startsWith(github.head_ref, 'dependabot/github_actions/')
     runs-on: ubuntu-latest
     permissions:
       contents: write

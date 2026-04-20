@@ -410,6 +410,13 @@ const MachineStats = ({
   const batteryStatus = meta ? pickMetaString(meta.battery_status) : undefined;
   const showBattery = batteryPercent != null || Boolean(batteryStatus);
 
+  const metaRowClass = showBattery
+    ? "mx-auto mt-5 flex max-w-full flex-nowrap items-stretch justify-center gap-2.5 sm:gap-3 lg:max-w-5xl"
+    : "mx-auto mt-5 flex max-w-xl flex-wrap items-stretch justify-center gap-2.5 sm:gap-3";
+  const metaChipClass = showBattery
+    ? "flex min-w-0 flex-1 basis-0 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm"
+    : "flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial";
+
   return (
     <section className={sectionShell}>
       <div className={innerShell}>
@@ -422,10 +429,8 @@ const MachineStats = ({
               <span className="ml-2">Live</span>
             </span>
           </p>
-          <div className="mx-auto mt-5 flex max-w-xl flex-wrap items-stretch justify-center gap-2.5 sm:gap-3">
-            <div
-              className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial"
-            >
+          <div className={metaRowClass}>
+            <div className={metaChipClass}>
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <SystemIcon className="h-4 w-4" aria-hidden />
               </span>
@@ -438,9 +443,7 @@ const MachineStats = ({
                 </p>
               </div>
             </div>
-            <div
-              className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial"
-            >
+            <div className={metaChipClass}>
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <Monitor className="h-4 w-4" aria-hidden />
               </div>
@@ -454,9 +457,7 @@ const MachineStats = ({
               </div>
             </div>
             {showBattery ? (
-              <div
-                className="flex min-w-[min(100%,14rem)] flex-1 items-center gap-2.5 rounded-xl border border-border/60 bg-muted/20 px-3.5 py-2.5 text-left shadow-sm backdrop-blur-sm sm:min-w-0 sm:flex-initial"
-              >
+              <div className={metaChipClass}>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Battery className="h-4 w-4" aria-hidden />
                 </span>

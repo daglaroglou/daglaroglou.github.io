@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
@@ -91,7 +89,7 @@ All colors MUST be HSL.
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
 
   html {
@@ -105,7 +103,8 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -178,7 +177,9 @@ All colors MUST be HSL.
 
 @layer utilities {
   .glass-card {
-    @apply bg-card/40 backdrop-blur-xl border border-border/50;
+    background-color: hsl(var(--card) / 0.4);
+    backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--border) / 0.5);
     transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 300ms ease;
   }
 

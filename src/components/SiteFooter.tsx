@@ -67,7 +67,7 @@ const SiteFooter = () => {
       controller.abort();
       window.clearInterval(interval);
     };
-  }, [commitFull, repository]);
+  }, []);
 
   return (
     <footer

@@ -50,15 +50,28 @@ const Hero = () => {
   const [isHovering, setIsHovering] = useState(false);
   
   // Subtitle rotation state
-  const subtitles = [
-    "Full-stack developer & tech enthusiast",
-    "Passionate about clean code",
-    "Open source contributor",
-    "Always learning, always growing"
-  ];
+  const subtitles = useMemo(
+    () => [
+      "Full-stack developer & tech enthusiast",
+      "Passionate about clean code",
+      "Open source contributor",
+      "Always learning, always growing",
+    ],
+    [],
+  );
   const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
   const [displaySubtitle, setDisplaySubtitle] = useState(subtitles[0]);
   const [isTypingSubtitle, setIsTypingSubtitle] = useState(false);
+  const isAfkHours = (() => {
+    const athensHour = Number(
+      new Intl.DateTimeFormat("en-GB", {
+        hour: "2-digit",
+        hour12: false,
+        timeZone: "Europe/Athens",
+      }).format(new Date()),
+    );
+    return athensHour >= 10 && athensHour < 18;
+  })();
 
   useEffect(() => {
     const fetchLanyard = async () => {
@@ -295,7 +308,7 @@ const Hero = () => {
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, []);
+  }, [subtitles]);
 
   return (
     <section className="min-h-screen flex items-start justify-center px-4 pt-24 pb-32 relative overflow-hidden sm:pt-16">
@@ -328,6 +341,13 @@ const Hero = () => {
             <p className="text-xl md:text-2xl text-muted-foreground font-mono">
               {displaySubtitle}
             </p>
+            {isAfkHours && (
+              <div className="flex justify-center">
+                <span className="glass-card px-4 py-2 rounded-full text-sm font-medium text-amber-400 border border-amber-400/40">
+                  AFK between 10:00 and 18:00
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Discord Rich Presence */}

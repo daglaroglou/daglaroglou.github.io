@@ -18,7 +18,10 @@ const CanvasParticles = ({ className }: CanvasParticlesProps) => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { resolvedTheme } = useTheme();
   const darkRef = useRef(resolvedTheme === "dark");
-  darkRef.current = resolvedTheme === "dark";
+
+  useEffect(() => {
+    darkRef.current = resolvedTheme === "dark";
+  }, [resolvedTheme]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;

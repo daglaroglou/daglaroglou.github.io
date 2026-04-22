@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import type { Components } from "react-markdown";
 import blogPosts from "@/data/blog-posts.json";
 import ThemeToggle from "@/components/ThemeToggle";
 import ParticlesBackground from "@/components/ParticlesBackground";
@@ -24,6 +25,30 @@ const BlogPost = () => {
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
+
+  const markdownComponents: Components = {
+    h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />,
+    h2: ({ node, ...props }) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
+    h3: ({ node, ...props }) => <h3 className="text-xl font-bold mt-4 mb-2" {...props} />,
+    p: ({ node, ...props }) => <p className="text-foreground/90 leading-relaxed mb-4" {...props} />,
+    a: ({ node, ...props }) => <a className="text-primary underline hover:text-primary/80 transition-colors" {...props} />,
+    code: ({ node, className, children, ...props }) => {
+      const isInline = !className;
+      return isInline ? (
+        <code className="bg-muted px-1.5 py-0.5 rounded text-sm" {...props}>
+          {children}
+        </code>
+      ) : (
+        <code className="block bg-muted p-4 rounded-lg overflow-x-auto my-4" {...props}>
+          {children}
+        </code>
+      );
+    },
+    ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
+    ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
+    blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-border pl-4 italic my-4" {...props} />,
+    img: ({ node, ...props }) => <img className="rounded-lg my-4" {...props} />,
+  };
 
   return (
     <div className="min-h-screen bg-background py-12 px-4 relative">
@@ -72,23 +97,7 @@ const BlogPost = () => {
         <div className="prose prose-invert prose-neutral max-w-none">
           <ReactMarkdown 
             remarkPlugins={[remarkGfm]}
-            components={{
-              h1: ({node, ...props}) => <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />,
-              h2: ({node, ...props}) => <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />,
-              h3: ({node, ...props}) => <h3 className="text-xl font-bold mt-4 mb-2" {...props} />,
-              p: ({node, ...props}) => <p className="text-foreground/90 leading-relaxed mb-4" {...props} />,
-              a: ({node, ...props}) => <a className="text-primary underline hover:text-primary/80 transition-colors" {...props} />,
-              code: ({node, inline, ...props}: any) => 
-                inline ? (
-                  <code className="bg-muted px-1.5 py-0.5 rounded text-sm" {...props} />
-                ) : (
-                  <code className="block bg-muted p-4 rounded-lg overflow-x-auto my-4" {...props} />
-                ),
-              ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
-              ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
-              blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-border pl-4 italic my-4" {...props} />,
-              img: ({node, ...props}) => <img className="rounded-lg my-4" {...props} />,
-            }}
+            components={markdownComponents}
           >
             {post.content}
           </ReactMarkdown>

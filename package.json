@@ -74,8 +74,8 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rolldown/binding-linux-x64-gnu": "^1.0.0-rc.17",
-    "@tailwindcss/postcss": "^4.2.4",
     "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.2.4",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -85,6 +85,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
+    "lightningcss": "^1.32.0",
     "postcss": "^8.5.10",
     "supabase": "^2.93.1",
     "tailwindcss": "^4.2.4",

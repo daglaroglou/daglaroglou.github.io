@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import { execSync } from "node:child_process";
 
@@ -37,7 +38,7 @@ export default defineConfig(() => ({
     host: "::",
     port: 8080,
   },
-  plugins: [react()],
+  plugins: [tailwindcss(), react()],
   define: {
     __BUILD_INFO__: JSON.stringify(buildInfo),
   },

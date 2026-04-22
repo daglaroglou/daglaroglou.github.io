@@ -5,7 +5,7 @@ import { execSync } from "node:child_process";
 
 function getBuildInfo() {
   const ghSha = process.env.GITHUB_SHA?.trim();
-  let commitFull = "";
+  let commitFull: string;
   let commitShort = "unknown";
   if (ghSha && ghSha.length >= 7) {
     commitFull = ghSha;

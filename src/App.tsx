@@ -13,6 +13,7 @@ import BlogPost from "./pages/BlogPost";
 import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import CustomCursor from "./components/CustomCursor";
+import FirstVisitSplash from "./components/FirstVisitSplash";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <TooltipProvider>
         <DocumentReducedMotion />
+        <FirstVisitSplash />
         <CustomCursor />
         <Toaster />
         <Sonner />

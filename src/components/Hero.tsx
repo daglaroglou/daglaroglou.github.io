@@ -48,6 +48,7 @@ const Hero = () => {
   const [lanyardData, setLanyardData] = useState<LanyardData | null>(null);
   const [displayText, setDisplayText] = useState("daglaroglou");
   const [isHovering, setIsHovering] = useState(false);
+  const [nowMs, setNowMs] = useState(() => Date.now());
   
   // Subtitle rotation state
   const subtitles = useMemo(
@@ -120,9 +121,8 @@ const Hero = () => {
     }
   };
 
-  const getTimeElapsed = (startTime: number) => {
-    const now = Date.now();
-    const elapsed = Math.floor((now - startTime) / 1000);
+  const getTimeElapsed = (startTime: number, currentTimeMs: number) => {
+    const elapsed = Math.floor((currentTimeMs - startTime) / 1000);
     const hours = Math.floor(elapsed / 3600);
     const minutes = Math.floor((elapsed % 3600) / 60);
     const seconds = elapsed % 60;
@@ -133,7 +133,6 @@ const Hero = () => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const [, forceUpdate] = useState({});
   const calculateLiveAge = useCallback(() => {
     const now = new Date();
     const nowUtc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
@@ -192,7 +191,7 @@ const Hero = () => {
     return () => cancelAnimationFrame(animationFrame);
   }, [calculateLiveAge]);
   useEffect(() => {
-    const interval = setInterval(() => forceUpdate({}), 1000);
+    const interval = setInterval(() => setNowMs(Date.now()), 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -235,8 +234,6 @@ const Hero = () => {
           setDisplayText(originalText);
         }
       }, 30);
-    } else {
-      setDisplayText(originalText);
     }
 
     return () => {
@@ -334,7 +331,10 @@ const Hero = () => {
               className="text-5xl md:text-7xl font-bold glow-text glitch-text"
               data-text={displayText}
               onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
+              onMouseLeave={() => {
+                setIsHovering(false);
+                setDisplayText("daglaroglou");
+              }}
             >
               {displayText}
             </h1>
@@ -409,7 +409,7 @@ const Hero = () => {
                       )}
                       {activity.timestamps?.start && (
                         <p className="text-xs text-muted-foreground mt-2">
-                          {getTimeElapsed(activity.timestamps.start)} elapsed
+                          {getTimeElapsed(activity.timestamps.start, nowMs)} elapsed
                         </p>
                       )}
                     </div>
@@ -435,7 +435,7 @@ const Hero = () => {
                       <p className="text-xs text-muted-foreground">{lanyardData.spotify.artist}</p>
                       {lanyardData.spotify.timestamps && (
                         <p className="text-xs text-muted-foreground mt-2">
-                          {getTimeElapsed(lanyardData.spotify.timestamps.start)} / {Math.floor((lanyardData.spotify.timestamps.end - lanyardData.spotify.timestamps.start) / 1000 / 60)}:{String(Math.floor(((lanyardData.spotify.timestamps.end - lanyardData.spotify.timestamps.start) / 1000) % 60)).padStart(2, '0')}
+                          {getTimeElapsed(lanyardData.spotify.timestamps.start, nowMs)} / {Math.floor((lanyardData.spotify.timestamps.end - lanyardData.spotify.timestamps.start) / 1000 / 60)}:{String(Math.floor(((lanyardData.spotify.timestamps.end - lanyardData.spotify.timestamps.start) / 1000) % 60)).padStart(2, '0')}
                         </p>
                       )}
                     </div>

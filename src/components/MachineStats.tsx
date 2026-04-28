@@ -239,6 +239,7 @@ const MachineStats = ({
     : "text-3xl md:text-4xl font-bold glow-text";
   const [stats, setStats] = useState<MachineStatsData | null>(null);
   const [initialFetchDone, setInitialFetchDone] = useState(false);
+  const [nowMs, setNowMs] = useState(() => Date.now());
 
   const SystemIcon: LucideIcon = systemIcon === "laptop" ? Laptop : Computer;
 
@@ -291,6 +292,11 @@ const MachineStats = ({
     };
   }, [statsTable, channelName]);
 
+  useEffect(() => {
+    const interval = setInterval(() => setNowMs(Date.now()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const getUsageColor = (usage: number) => {
     if (usage < 50) return "text-green-500";
     if (usage < 75) return "text-yellow-500";
@@ -304,7 +310,7 @@ const MachineStats = ({
   };
 
   const timeDiff = stats
-    ? Math.floor((Date.now() - new Date(stats.timestamp).getTime()) / 1000)
+    ? Math.floor((nowMs - new Date(stats.timestamp).getTime()) / 1000)
     : 0;
   const isStale = stats ? timeDiff > STALE_AFTER_SECONDS : false;
   const isOffline = !stats || isStale;

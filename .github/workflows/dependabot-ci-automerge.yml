@@ -33,8 +33,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "22"
+          node-version: "22.x"
+          check-latest: true
           cache: "npm"
+          cache-dependency-path: package-lock.json
 
       # Dependabot grouped updates can produce lockfiles that npm's strict peer
       # resolver rejects (e.g. eslint major vs plugin peer ranges). Legacy peer

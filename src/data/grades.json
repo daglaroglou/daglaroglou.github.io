@@ -21,9 +21,9 @@
               "passed": true
             },
             {
-              "courseCode": "AIC101",
-              "courseName": "ΑΛΓΟΡΙΘΜΟΙ",
-              "grade": 10,
+              "courseCode": "AIC103",
+              "courseName": "ΔΙΑΔΙΚΑΣΤΙΚΟΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ",
+              "grade": 5,
               "ects": 5,
               "passed": true
             },
@@ -35,16 +35,9 @@
               "passed": true
             },
             {
-              "courseCode": "AIC103",
-              "courseName": "ΔΙΑΔΙΚΑΣΤΙΚΟΣ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ",
-              "grade": 5,
-              "ects": 5,
-              "passed": true
-            },
-            {
-              "courseCode": "AIC105",
-              "courseName": "ΣΥΣΤΗΜΑΤΑ ΥΠΟΛΟΓΙΣΤΩΝ",
-              "grade": 8,
+              "courseCode": "AIC101",
+              "courseName": "ΑΛΓΟΡΙΘΜΟΙ",
+              "grade": 10,
               "ects": 5,
               "passed": true
             },
@@ -61,19 +54,19 @@
               "grade": 10,
               "ects": 5,
               "passed": true
+            },
+            {
+              "courseCode": "AIC105",
+              "courseName": "ΣΥΣΤΗΜΑΤΑ ΥΠΟΛΟΓΙΣΤΩΝ",
+              "grade": 8,
+              "ects": 5,
+              "passed": true
             }
           ]
         },
         {
           "semester": "Β εξάμηνο",
           "courses": [
-            {
-              "courseCode": "AIC202",
-              "courseName": "ΒΑΣΕΙΣ ΔΕΔΟΜΕΝΩΝ",
-              "grade": 6,
-              "ects": 5,
-              "passed": true
-            },
             {
               "courseCode": "CSC201",
               "courseName": "ΠΙΘΑΝΟΤΗΤΕΣ",
@@ -85,6 +78,13 @@
               "courseCode": "AIC203",
               "courseName": "ΔΙΑΚΡΙΤΑ ΜΑΘΗΜΑΤΙΚΑ",
               "grade": 5.5,
+              "ects": 5,
+              "passed": true
+            },
+            {
+              "courseCode": "AIC202",
+              "courseName": "ΒΑΣΕΙΣ ΔΕΔΟΜΕΝΩΝ",
+              "grade": 6,
               "ects": 5,
               "passed": true
             },
@@ -141,13 +141,6 @@
               "passed": true
             },
             {
-              "courseCode": "AIC304",
-              "courseName": "ΠΛΗΡΟΦΟΡΙΑΚΑ ΣΥΣΤΗΜΑΤΑ",
-              "grade": 8,
-              "ects": 5,
-              "passed": true
-            },
-            {
               "courseCode": "AIC302",
               "courseName": "ΔΙΚΤΥΑ ΥΠΟΛΟΓΙΣΤΩΝ",
               "grade": 8,
@@ -160,6 +153,13 @@
               "grade": 8,
               "ects": 5,
               "passed": true
+            },
+            {
+              "courseCode": "AIC304",
+              "courseName": "ΠΛΗΡΟΦΟΡΙΑΚΑ ΣΥΣΤΗΜΑΤΑ",
+              "grade": 8,
+              "ects": 5,
+              "passed": true
             }
           ]
         },
@@ -167,16 +167,9 @@
           "semester": "Δ εξάμηνο",
           "courses": [
             {
-              "courseCode": "CSC401",
-              "courseName": "ΑΝΑΛΥΣΗ ΑΛΓΟΡΙΘΜΩΝ",
-              "grade": 6.5,
-              "ects": 5,
-              "passed": true
-            },
-            {
-              "courseCode": "CSC402",
-              "courseName": "ΤΕΧΝΟΛΟΓΙΑ ΛΟΓΙΣΜΙΚΟΥ",
-              "grade": 5.5,
+              "courseCode": "AIC404",
+              "courseName": "ΨΗΦΙΑΚΗ ΟΙΚΟΝΟΜΙΚΗ",
+              "grade": 5,
               "ects": 5,
               "passed": true
             },
@@ -188,16 +181,9 @@
               "passed": true
             },
             {
-              "courseCode": "AIC403",
-              "courseName": "ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΔΙΑΔΙΚΤΥΟΥ",
-              "grade": 5,
-              "ects": 5,
-              "passed": true
-            },
-            {
-              "courseCode": "AIC404",
-              "courseName": "ΨΗΦΙΑΚΗ ΟΙΚΟΝΟΜΙΚΗ",
-              "grade": 5,
+              "courseCode": "CSC401",
+              "courseName": "ΑΝΑΛΥΣΗ ΑΛΓΟΡΙΘΜΩΝ",
+              "grade": 6.5,
               "ects": 5,
               "passed": true
             },
@@ -205,6 +191,20 @@
               "courseCode": "AIC401",
               "courseName": "ΑΛΛΗΛΕΠΙΔΡΑΣΗ ΑΝΘΡΩΠΟΥ-ΥΠΟΛΟΓΙΣΤΗ",
               "grade": 7,
+              "ects": 5,
+              "passed": true
+            },
+            {
+              "courseCode": "AIC403",
+              "courseName": "ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΔΙΑΔΙΚΤΥΟΥ",
+              "grade": 5,
+              "ects": 5,
+              "passed": true
+            },
+            {
+              "courseCode": "CSC402",
+              "courseName": "ΤΕΧΝΟΛΟΓΙΑ ΛΟΓΙΣΜΙΚΟΥ",
+              "grade": 5.5,
               "ects": 5,
               "passed": true
             }

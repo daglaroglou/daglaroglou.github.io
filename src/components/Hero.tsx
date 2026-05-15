@@ -71,7 +71,7 @@ const Hero = () => {
         timeZone: "Europe/Athens",
       }).format(new Date()),
     );
-    return athensHour >= 10 && athensHour < 18;
+    return athensHour >= 12 && athensHour < 20;
   })();
 
   useEffect(() => {

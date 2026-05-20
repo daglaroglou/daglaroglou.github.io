@@ -344,7 +344,7 @@ const Hero = () => {
             {isAfkHours && (
               <div className="flex justify-center">
                 <span className="glass-card px-4 py-2 rounded-full text-sm font-medium text-amber-400 border border-amber-400/40">
-                  AFK between 10:00 and 18:00
+                  AFK between 12:00 and 20:00
                 </span>
               </div>
             )}

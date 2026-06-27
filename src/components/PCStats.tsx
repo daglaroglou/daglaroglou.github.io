@@ -1,7 +1,7 @@
 import MachineStats, { type StatsMetaLabels } from "@/components/MachineStats";
 
 const DEFAULT_STATS_LABELS: StatsMetaLabels = {
-  os: "Windows 11 IoT LTSC",
+  os: "Windows 11 Pro",
   display: 'MSI 24" · 144 Hz',
   cpu: "i5-11600K",
   ram: "Corsair 32GB",

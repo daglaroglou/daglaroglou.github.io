@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
 import ParticlesBackground from "@/components/ParticlesBackground";
 
 import portfolioWebsites from "@/data/portfolio-websites.json";
@@ -27,9 +26,6 @@ const Portfolio = () => {
         >
           Home
         </Link>
-      </div>
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
       </div>
       <div className="max-w-4xl mx-auto relative z-10">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 glow-text">

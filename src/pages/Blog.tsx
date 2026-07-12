@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
 import ParticlesBackground from "@/components/ParticlesBackground";
 
 // Import blog posts (in a real app, this would come from an API or file system)
@@ -22,9 +21,6 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background py-12 px-4 relative">
       <ParticlesBackground />
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
       <div className="max-w-4xl mx-auto relative z-10">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 glow-text">Blog</h1>
         <p className="text-muted-foreground mb-12">

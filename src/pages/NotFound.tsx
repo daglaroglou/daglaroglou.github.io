@@ -1,7 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Home, AlertCircle, BookOpen, LayoutGrid } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
 import ParticlesBackground from "@/components/ParticlesBackground";
 
 const NotFound = () => {
@@ -14,9 +13,6 @@ const NotFound = () => {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 relative overflow-hidden">
       <ParticlesBackground />
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
 
       <main className="max-w-2xl w-full relative z-10 animate-fade-in">

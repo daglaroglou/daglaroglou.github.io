@@ -6,7 +6,6 @@ import LaptopStats from "@/components/LaptopStats";
 import UniversityGrades from "@/components/UniversityGrades";
 import BlogPreview from "@/components/BlogPreview";
 import Donation from "@/components/Donation";
-import ThemeToggle from "@/components/ThemeToggle";
 import CheckpointSlider from "@/components/CheckpointSlider";
 
 const Index = () => {
@@ -19,9 +18,6 @@ const Index = () => {
         >
           Portfolio
         </Link>
-      </div>
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
       </div>
       <CheckpointSlider />
       <section id="hero">

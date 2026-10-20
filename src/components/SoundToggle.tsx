@@ -1,15 +1,8 @@
 import { Volume2, VolumeX } from "lucide-react";
 import { useSound } from "@/hooks/use-sound";
-import { useEffect, useState } from "react";
 
 const SoundToggle = () => {
   const { isMuted, toggleMute, playToggle } = useSound();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const handleToggle = () => {
     toggleMute();
     if (isMuted) {
@@ -17,8 +10,6 @@ const SoundToggle = () => {
       playToggle();
     }
   };
-
-  if (!mounted) return null;
 
   return (
     <button

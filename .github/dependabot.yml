@@ -7,14 +7,21 @@ updates:
       day: monday
       time: "08:00"
       timezone: "UTC"
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 10
     labels:
       - dependencies
+    ignore:
+      # TypeScript 7 is not yet supported by typescript-eslint 8.x
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     groups:
-      # One PR for all npm dependency updates each run.
+      # Group minor and patch updates for automatic CI and automerge
       npm-dependencies:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: github-actions
     directory: /

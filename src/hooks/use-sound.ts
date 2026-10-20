@@ -1,26 +1,28 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 let globalIsMuted = typeof window !== 'undefined' ? localStorage.getItem('soundMuted') === 'true' : false;
-const listeners = new Set<(muted: boolean) => void>();
+const listeners = new Set<() => void>();
 
 const setGlobalMuted = (muted: boolean) => {
   globalIsMuted = muted;
   if (typeof window !== 'undefined') {
     localStorage.setItem('soundMuted', muted.toString());
   }
-  listeners.forEach(listener => listener(muted));
+  listeners.forEach(listener => listener());
 };
 
-export const useSound = () => {
-  const [isMuted, setIsMuted] = useState(globalIsMuted);
+const subscribe = (listener: () => void) => {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+};
 
-  useEffect(() => {
-    setIsMuted(globalIsMuted);
-    listeners.add(setIsMuted);
-    return () => {
-      listeners.delete(setIsMuted);
-    };
-  }, []);
+const getSnapshot = () => globalIsMuted;
+const getServerSnapshot = () => false;
+
+export const useSound = () => {
+  const isMuted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const toggleMute = useCallback(() => {
     setGlobalMuted(!globalIsMuted);

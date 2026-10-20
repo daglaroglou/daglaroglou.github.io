@@ -10,12 +10,7 @@ const CRTToggle = () => {
     }
     return true;
   });
-  const [mounted, setMounted] = useState(false);
   const { playToggle } = useSound();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("crtEnabled", isCRTEnabled.toString());
@@ -30,8 +25,6 @@ const CRTToggle = () => {
     setIsCRTEnabled((prev) => !prev);
     playToggle();
   };
-
-  if (!mounted) return null;
 
   return (
     <button
